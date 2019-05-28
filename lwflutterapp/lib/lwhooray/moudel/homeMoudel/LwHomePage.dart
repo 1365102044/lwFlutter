@@ -51,7 +51,7 @@ class _LwHomePageState extends State<LwHomePage>
   void _getBannerList() async {
     LwNetworkUtils.requestDataWithPost(
         LWAPI.HOME_BANNER_URL, {'equipment': '2'}, (Response response) {
-      print(response.data.toString());
+      // print(response.data.toString());
       LwResponse lwresponse = LwResponse.fromJson(jsonDecode(response.data));
       setState(() {
         _bannerList.clear();

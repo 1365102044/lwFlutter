@@ -56,6 +56,9 @@ class LwNetworkUtils {
     dio.options.baseUrl = LWAPI.LW_API_BASE_URL;
     dio.options.connectTimeout = 5000;
     dio.options.receiveTimeout = 60*1000;
+    
+    /// 默认参数
+    param['gcid'] = '0371070';
 
     ErrorModel errorModel = ErrorModel(url, param, 0, null);
     try {
@@ -97,6 +100,7 @@ class LwNetworkUtils {
   // 处理错误信息
   static _handlerError(ErrorModel errorModel, Function errorCallBlock) {
     if (errorCallBlock != null) {
+      print('\n\n**********error:${errorModel.descption()}\n\n');
       errorCallBlock(errorModel);
     }
   }

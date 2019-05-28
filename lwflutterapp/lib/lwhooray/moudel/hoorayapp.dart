@@ -21,6 +21,20 @@ class HoorayAppSatate extends State<Hoorayapp>
     //初始化，理论上只有初始化一次，
     super.initState();
     controller = new TabController(length: 4, vsync: this);
+
+    controller.addListener(
+      (){
+        
+        if(controller.indexIsChanging){
+        print('------------${controller.index.toString()}'); 
+        if (controller.index == 2) {
+          // controller.index = 1;
+        }
+        print('=====${controller.index}');
+      }  
+
+      });
+    
   }
 
   @override
@@ -34,6 +48,8 @@ class HoorayAppSatate extends State<Hoorayapp>
   void didChangeDependencies() {
     // 在 initState 之后调用，此时可以获取其他 State
     super.didChangeDependencies();
+
+    controller.index  = 0;
   }
 
   @override

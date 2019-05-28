@@ -37,9 +37,9 @@ class _LwHousePageState extends State<LwHousePage> with AutomaticKeepAliveClient
     'sortType':_sortType,
     'quyuId':_quyuId,
     'cityId':_cityid};
-    print('\n----para:${para.toString()}');
+    // print('\n----para:${para.toString()}');
     LwNetworkUtils.requestDataWithPost(LWAPI.HOUSE_PROJECT_LIST_DATA_URL, para, (Response response){
-      print('===========house_list:$response');
+      // print('===========house_list:$response');
       LwResponse lwrespose =  LwResponse.fromJson(jsonDecode(response.data));
       setState(() {
         _houseListModelList.clear();

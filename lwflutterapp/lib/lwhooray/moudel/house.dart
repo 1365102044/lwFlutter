@@ -13,7 +13,6 @@ class HouseState extends State<House>{
 String showtext = 'this is house page';
 
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,12 +28,12 @@ String showtext = 'this is house page';
 @override
   void initState() {
     super.initState();
-    // 延迟 执行
-    Future.delayed(Duration(seconds:3),(){
-    setState(() {
-      this.showtext = 'this is change after text!';
-    });
-    });
+    // // 延迟 执行
+    // Future.delayed(Duration(seconds:3),(){
+    // setState(() {
+    //   this.showtext = 'this is change after text!';
+    // });
+    // });
   }
 
 }

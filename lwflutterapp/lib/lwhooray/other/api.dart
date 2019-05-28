@@ -19,5 +19,17 @@ class LWAPI{
   static final String HOME_TUIJIAN_URL = 'v2/clientAPP/app/business_recommendation';
   /// 城市列表
   static final String HOME_CITY_DATA_LIST_URL = 'v2/clientAPP/app/get_city_list';
+  
+  /// 根据城市id获取区域列 (房源 筛选的 区域列表 cityId:'')
+  static final String HOUSE_FANGYUAN_DATA_LIST_URL = 'v2/clientAPP/app/get_townList_by_cityId';
+  /// 项目列表（房源列表）
+  static final String HOUSE_PROJECT_LIST_DATA_URL = 'v2/clientAPP/app/get_item_list';
+  /// 项目详情
+  static final String HOUSE_PROJECT_LIST_DEATIL_DATA_URL = 'v2/clientAPP/app/get_item_details';
+  /// 户型列表
+  static final String HOUSE_HUXING_LIST_DATA_URL = 'v2/clientAPP/app/get_room_type_list';
+  /// 户型详情
+  static final String HOUSE_HUXING_LIST_DEATIL_DATA_URL = 'v2/clientAPP/app/get_roomType_details';
+
 
 }

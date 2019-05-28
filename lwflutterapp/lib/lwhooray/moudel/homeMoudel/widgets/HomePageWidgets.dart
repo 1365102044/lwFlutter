@@ -8,7 +8,7 @@ Widget HomeColumsItemWidget(BuildContext context,List<dynamic>modelList){
   String toptitle = '好寓精选'; 
   double hei = 190.0;
   // String picurl = roomList[index].roomTypePic.big;
-  if ((modelList.runtimeType == RoomTypeListModel)) {
+  if ((modelList.first.runtimeType == RoomTypeListModel)) {
     topdesc = '房子可以租，生活不将就';
     toptitle = '热门户型'; 
     hei = 210.0;
@@ -17,20 +17,21 @@ Widget HomeColumsItemWidget(BuildContext context,List<dynamic>modelList){
   return Column(
     children: <Widget>[
       Container(
+        color: Colors.white,
         child: HomeItemTopWidget(context,toptitle,topdesc),
       ),
       Container(
+        color: Colors.white,
         height: hei,
         child: ListView.builder(
           itemCount: modelList.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context,index){
             dynamic model = modelList.first;
-            print('_________：${model.runtimeType}');
             if (model.runtimeType ==  RoomTypeListModel ) {
-              return HomeRowItemWidget(context,modelList[index].roomTypePic.big,modelList[index].itemName,null);  
+              return HomeRowItemWidget(context,modelList[index].roomTypePic.big,modelList[index].itemName,modelList[index].roomTypeName);  
             }else if(model.runtimeType == ItemListModel){
-              return HomeRowItemWidget(context,modelList[index].ItemPicModel.big,modelList[index].itemName,null);  
+              return HomeRowItemWidget(context,modelList[index].itemPic.big,modelList[index].itemName,'');  
             }else{}
           },
         ),
@@ -41,9 +42,8 @@ Widget HomeColumsItemWidget(BuildContext context,List<dynamic>modelList){
 
 Widget HomeRowItemWidget(BuildContext context,String picurl,String title,String desc){
   
-  print('--------------$picurl');
   return Container(
-    padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+    padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
     child:Column(
     children: <Widget>[
       Container(
@@ -63,10 +63,13 @@ Widget HomeRowItemWidget(BuildContext context,String picurl,String title,String 
       Container(
         child: lwDescTitle(title,fontsize:14,maxline: 1),
         alignment: Alignment.topLeft,
+        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
       ),
       Container(
         child: lwDescTitle(desc,fontsize:12,maxline: 1),
         alignment: Alignment.topLeft,
+        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+        height: (desc == '')?0:20.0,
       ),
     ],
   ),
@@ -109,7 +112,9 @@ Widget HomeFuncItemsWidget(BuildContext context) {
     rowWidgets.add(lwIconTopTextBottomWidget(context, k, v));
   });
 
-  return Row(
+  return Container(
+    color: Colors.white,
+    child: Row(
     children: <Widget>[
       Expanded(
         child: lwIconTopTextBottomWidget(
@@ -132,13 +137,14 @@ Widget HomeFuncItemsWidget(BuildContext context) {
             context, '购物商城', 'assets/home/jingdongshangcheng.png'),
       ),
     ],
+  ),
   );
 }
 
 /// 文字在下图片在上组件
 Widget lwIconTopTextBottomWidget(
     BuildContext context, String text, String iconName,
-    {double iconW = 30.0, double iconH = 30.0}) {
+    {double iconW = 30.0, double iconH = 30.0,double fontsize =15.0,textcolor:Colors.black}) {
   return GestureDetector(
     onTap: () {
       print('---------------你点击了：$text');
@@ -160,7 +166,12 @@ Widget lwIconTopTextBottomWidget(
             // padding: EdgeInsets.fromLTRB(2, 0, 2, 5),
             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
             child: Center(
-              child: Text(text),
+              child: Text(text,
+              style: TextStyle(
+                fontSize: fontsize,
+                color: textcolor,
+              ),
+              ),
             ),
           )
         ],

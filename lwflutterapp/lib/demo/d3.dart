@@ -191,6 +191,7 @@ Widget _getCardWidget() {
  * 多个组件层叠布局 使用
  * Positioned(left,right,top,bottom,width,height),
  * 
+ * 需要浮动的组件 如果需要使用Expand（） ,需要设置总的宽度或高度
  */
 Widget _getHeaderIconWidget() {
   return Stack(

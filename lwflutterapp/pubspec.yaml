@@ -100,8 +100,12 @@ flutter:
     - assets/home/yuyuekanfang.png
     - assets/home/zaixianqianyue.png
     - assets/home/arrow_right.png
-    
-
+    - assets/house/location_icon.jpg
+    - assets/me/
+    # me_top_bg.png
+    # - assets/me/mine_ad.png
+    # - assets/me/accountDefultIcon.png
+    - assets/me/func_icon/
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

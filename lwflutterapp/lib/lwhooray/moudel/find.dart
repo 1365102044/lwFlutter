@@ -21,9 +21,7 @@ class FindState extends State<Find>{
         // body: Center(
         //   child: new Text('this is find page'),
         // ),
-        body: Column(     // 垂直布局  Row 水平布局
-          children: <Widget>[Text('this is find page',style: sty,),
-          Text('by row layout',style: sty,)],
+        body: Text('this is find page',style: sty,
         ),
       ),
     );

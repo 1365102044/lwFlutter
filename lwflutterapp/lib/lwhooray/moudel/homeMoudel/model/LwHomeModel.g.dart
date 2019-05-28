@@ -14,27 +14,34 @@ Map<String, dynamic> _$StatusToJson(Status instance) =>
     <String, dynamic>{'msg': instance.msg, 'code': instance.code};
 
 Reslut _$ReslutFromJson(Map<String, dynamic> json) {
-  return Reslut((json['bannerPicList'] as List)
-      ?.map((e) => e == null
-          ? null
-          : BannerPicListModel.fromJson(e as Map<String, dynamic>))
-      ?.toList())
-    ..roomTypeList = (json['roomTypeList'] as List)
-        ?.map((e) => e == null
-            ? null
-            : RoomTypeListModel.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..itemList = (json['itemList'] as List)
-        ?.map((e) => e == null
-            ? null
-            : ItemListModel.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+  return Reslut(
+      (json['bannerPicList'] as List)
+          ?.map((e) => e == null
+              ? null
+              : BannerPicListModel.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      (json['itemList'] as List)
+          ?.map((e) => e == null
+              ? null
+              : ItemListModel.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      (json['roomTypeList'] as List)
+          ?.map((e) => e == null
+              ? null
+              : RoomTypeListModel.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      (json['list'] as List)
+          ?.map((e) => e == null
+              ? null
+              : HouseListModel.fromJson(e as Map<String, dynamic>))
+          ?.toList());
 }
 
 Map<String, dynamic> _$ReslutToJson(Reslut instance) => <String, dynamic>{
       'bannerPicList': instance.bannerPicList,
       'roomTypeList': instance.roomTypeList,
-      'itemList': instance.itemList
+      'itemList': instance.itemList,
+      'list': instance.list
     };
 
 LwResponse _$LwResponseFromJson(Map<String, dynamic> json) {
@@ -70,7 +77,8 @@ RoomTypeListModel _$RoomTypeListModelFromJson(Map<String, dynamic> json) {
       json['roomTypePic'] == null
           ? null
           : RoomTypePicModel.fromJson(
-              json['roomTypePic'] as Map<String, dynamic>));
+              json['roomTypePic'] as Map<String, dynamic>),
+      json['roomTypeName'] as String);
 }
 
 Map<String, dynamic> _$RoomTypeListModelToJson(RoomTypeListModel instance) =>
@@ -78,7 +86,8 @@ Map<String, dynamic> _$RoomTypeListModelToJson(RoomTypeListModel instance) =>
       'itemName': instance.itemName,
       'roomTypeId': instance.roomTypeId,
       'iosRoomTypeLowestprice': instance.iosRoomTypeLowestprice,
-      'roomTypePic': instance.roomTypePic
+      'roomTypePic': instance.roomTypePic,
+      'roomTypeName': instance.roomTypeName
     };
 
 ItemListModel _$ItemListModelFromJson(Map<String, dynamic> json) {
@@ -88,8 +97,7 @@ ItemListModel _$ItemListModelFromJson(Map<String, dynamic> json) {
       json['itemId'] as String,
       json['itemPic'] == null
           ? null
-          : ItemPicModel.fromJson(json['itemPic'] as Map<String, dynamic>),
-      json['roomTypeName'] as String);
+          : ItemPicModel.fromJson(json['itemPic'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$ItemListModelToJson(ItemListModel instance) =>
@@ -97,7 +105,6 @@ Map<String, dynamic> _$ItemListModelToJson(ItemListModel instance) =>
       'itemName': instance.itemName,
       'itemAddress': instance.itemAddress,
       'itemId': instance.itemId,
-      'roomTypeName': instance.roomTypeName,
       'itemPic': instance.itemPic
     };
 
@@ -113,4 +120,11 @@ ItemPicModel _$ItemPicModelFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ItemPicModelToJson(ItemPicModel instance) =>
+    <String, dynamic>{'big': instance.big};
+
+LwPicModel _$LwPicModelFromJson(Map<String, dynamic> json) {
+  return LwPicModel(json['big'] as String);
+}
+
+Map<String, dynamic> _$LwPicModelToJson(LwPicModel instance) =>
     <String, dynamic>{'big': instance.big};

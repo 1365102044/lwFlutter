@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'find.dart';
 import 'home.dart';
 import 'homeMoudel/LwHomePage.dart';
-import 'house.dart';
+import './house.dart';
+import 'houseMoudel/LwHousePage.dart';
+import 'loginMoudel/LwLogin.dart';
 import 'me.dart';
+import 'meMoudel/LwMePage.dart';
 
 class Hoorayapp extends StatefulWidget {
   @override
@@ -41,9 +44,9 @@ class HoorayAppSatate extends State<Hoorayapp>
         controller: controller,
         children: [
           new LwHomePage(),
-          new House(),
-          new Find(),
-          new Me(),
+          new LwHousePage(),
+          new LwLoginPage(),
+          new LwMePage(),
         ],
       ),
       bottomNavigationBar: new Material(

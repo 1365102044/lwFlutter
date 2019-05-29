@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/meMoudel/widgets/LwMeWidget.dart';
 
 class LwMePage extends StatefulWidget {
@@ -7,10 +8,30 @@ class LwMePage extends StatefulWidget {
   _LwMePageState createState() => _LwMePageState();
 }
 
-class _LwMePageState extends State<LwMePage> {
+class _LwMePageState extends State<LwMePage> with AutomaticKeepAliveClientMixin{
+  bool get wantKeepAlive => true;
+  @override
+
+  
+  void initState() {
+    super.initState();
+    
+    print('--------1-------me');
+    _checkLoginStatus();
+
+  }
+
+  _checkLoginStatus() async {
+    await lwLocalDataUtils().isLoginStatue(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('title'),
+      ),
       body: Container(
         color: Color(0xfff5f5f5),
         child: ListView.separated(
@@ -19,10 +40,7 @@ class _LwMePageState extends State<LwMePage> {
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return meHeaderInforWidget(
-                  context,
-                  '',
-                  '18801040890');
+              return meHeaderInforWidget(context, '', '18801040890');
             } else if (index == 1) {
               return Container(
                 color: Colors.white,
@@ -113,7 +131,7 @@ class _LwMePageState extends State<LwMePage> {
               color: Color(0xfff5f5f5),
               height: (index == 0 || index == 5 || index == 3)
                   ? 5.0
-                  : ((index == 6 || index ==1) ? 1.0 : 0.0),
+                  : ((index == 6 || index == 1) ? 1.0 : 0.0),
             );
           },
         ),

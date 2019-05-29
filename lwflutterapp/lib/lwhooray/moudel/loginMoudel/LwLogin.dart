@@ -138,9 +138,12 @@ class _LwLoginPageState extends State<LwLoginPage>
                 String vle = sharedPreferences
                     .getString(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY);
                 print('--------------token:$vle');
-                // Future<bool> res = lwLocalDataUtils.isLoginStatue();
+                
+                
+                // bool isl = await lwLocalDataUtils().isLoginStatue(context);
+                
+                // print('*************${isl.toString()}');
 
-                print('*************');
                 _contextphoneFocusNode.unfocus();
                 _contextpwFocusNode.unfocus();
                 // FocusScope.of(context).requestFocus(FocusNode());

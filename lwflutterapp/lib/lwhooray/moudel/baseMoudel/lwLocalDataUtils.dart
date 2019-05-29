@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/find.dart';
+import 'package:lwflutterapp/lwhooray/moudel/loginMoudel/LwLogin.dart';
 import 'package:lwflutterapp/lwhooray/moudel/loginMoudel/model/loginModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +44,7 @@ class lwLocalDataUtils {
     }
   } 
 
-  static  getData(String key,{dynamic valueType}) async{
+  static getData(String key,{dynamic valueType}) async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     print('------valuetype:$valueType');
     if (valueType.runtimeType == String) {
@@ -54,13 +57,20 @@ class lwLocalDataUtils {
     }
   }
 
-  // bool isLoginStatue() {
-  //     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //     String account_token = sharedPreferences.getString(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY);
-  //     if (account_token != null && account_token != '') {
-  //       return true;
-  //     }else{
-  //       return false;
-  //     }
-  // }
+  /// 是否登录
+  Future<Null> isLoginStatue(BuildContext context) async{
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      String account_token = sharedPreferences.getString(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY);
+      if (account_token != null && account_token != '') {
+        print('========未登录：$context');
+        Navigator.push(context, MaterialPageRoute(
+           builder: (context) => LwLoginPage(),
+        ));
+        // return true;
+      }else{
+        
+        
+        // return false;
+      }
+  }
 }

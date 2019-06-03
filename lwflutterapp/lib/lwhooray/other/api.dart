@@ -12,7 +12,7 @@ class LWAPI{
 
 
   /// API的base url
-  static final String LW_API_BASE_URL = LW_API_PRODUCT_BASE_URL;
+  static final String LW_API_BASE_URL = LW_API_CESHI_BASE_URL;
   /// 首页 banner (equipment:2) 设备（1.微信，2.APP）
   static final String HOME_BANNER_URL = 'v2/clientAPP/app/banner_promotion';
   /// 首页 推荐（房源、户型）（cityId：d94bba14-dec1-11e5-bcc3-00163e1c066c）

@@ -47,7 +47,6 @@ class _LwHousePageState extends State<LwHousePage> with AutomaticKeepAliveClient
         _houseListModelList.addAll(lwrespose.result.list);
       });
     }, (ErrorModel error){
-      print('---error:${error.descption()}');
     });
   }
   

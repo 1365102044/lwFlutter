@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/lwHouseDeatilPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/model/LwHouseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/widgets/LwHouseWidgets.dart';
 import 'package:lwflutterapp/lwhooray/tool/networkUtils.dart';
@@ -64,7 +65,17 @@ class _LwHousePageState extends State<LwHousePage> with AutomaticKeepAliveClient
             itemCount: _houseListModelList.length,
             itemBuilder: (context,index){
               HouseListModel model = _houseListModelList[index];
-              return houseColumsItemWidget(context,model.picObj.big,model.itemName,model.houseItemAddress,model.iosDedicated);
+              return GestureDetector(
+                child: houseColumsItemWidget(context,model.picObj.big,model.itemName,model.houseItemAddress,model.iosDedicated),
+                onTap: (){
+                  print('----------你点击了：${model.itemName}');
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => lwHouseDeatilPage(model.customid),
+                    )
+                  );
+                },
+              );
             },
             separatorBuilder: (context,index){
               return Container(

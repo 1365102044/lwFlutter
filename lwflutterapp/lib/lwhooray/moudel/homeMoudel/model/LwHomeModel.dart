@@ -64,13 +64,14 @@ class BannerPicListModel {
 /// 户型
 @JsonSerializable()
 class RoomTypeListModel {
+  double roomTypeArea;
   String itemName;
   String roomTypeId;
   String iosRoomTypeLowestprice;
   RoomTypePicModel roomTypePic;
   String roomTypeName;
   RoomTypeListModel(this.itemName, this.roomTypeId, this.iosRoomTypeLowestprice,
-      this.roomTypePic, this.roomTypeName);
+      this.roomTypePic, this.roomTypeName,this.roomTypeArea);
 
   factory RoomTypeListModel.fromJson(Map<String, dynamic> json) =>
       _$RoomTypeListModelFromJson(json);
@@ -83,8 +84,9 @@ class ItemListModel {
   String itemName;
   String itemAddress;
   String itemId;
+  String iosItemLowestprice;
   ItemPicModel itemPic;
-  ItemListModel(this.itemName, this.itemAddress, this.itemId, this.itemPic);
+  ItemListModel(this.itemName, this.itemAddress, this.itemId,this.iosItemLowestprice,this.itemPic);
   factory ItemListModel.fromJson(Map<String, dynamic> json) =>
       _$ItemListModelFromJson(json);
   Map<String, dynamic> toJson() => _$ItemListModelToJson(this);
@@ -93,8 +95,7 @@ class ItemListModel {
 @JsonSerializable()
 class RoomTypePicModel extends LwPicModel {
   RoomTypePicModel(String big) : super(big);
-  // String big;
-  // RoomTypePicModel(this.big);
+
   factory RoomTypePicModel.fromJson(Map<String, dynamic> json) =>
       _$RoomTypePicModelFromJson(json);
   Map<String, dynamic> toJson() => _$RoomTypePicModelToJson(this);

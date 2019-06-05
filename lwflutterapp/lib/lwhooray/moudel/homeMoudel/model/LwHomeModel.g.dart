@@ -78,7 +78,8 @@ RoomTypeListModel _$RoomTypeListModelFromJson(Map<String, dynamic> json) {
           ? null
           : RoomTypePicModel.fromJson(
               json['roomTypePic'] as Map<String, dynamic>),
-      json['roomTypeName'] as String);
+      json['roomTypeName'] as String,
+      json['roomTypeArea'] as double,);
 }
 
 Map<String, dynamic> _$RoomTypeListModelToJson(RoomTypeListModel instance) =>
@@ -87,7 +88,8 @@ Map<String, dynamic> _$RoomTypeListModelToJson(RoomTypeListModel instance) =>
       'roomTypeId': instance.roomTypeId,
       'iosRoomTypeLowestprice': instance.iosRoomTypeLowestprice,
       'roomTypePic': instance.roomTypePic,
-      'roomTypeName': instance.roomTypeName
+      'roomTypeName': instance.roomTypeName,
+      'roomTypeArea':instance.roomTypeArea
     };
 
 ItemListModel _$ItemListModelFromJson(Map<String, dynamic> json) {
@@ -95,6 +97,7 @@ ItemListModel _$ItemListModelFromJson(Map<String, dynamic> json) {
       json['itemName'] as String,
       json['itemAddress'] as String,
       json['itemId'] as String,
+      json['iosItemLowestprice'] as String,
       json['itemPic'] == null
           ? null
           : ItemPicModel.fromJson(json['itemPic'] as Map<String, dynamic>));
@@ -105,7 +108,8 @@ Map<String, dynamic> _$ItemListModelToJson(ItemListModel instance) =>
       'itemName': instance.itemName,
       'itemAddress': instance.itemAddress,
       'itemId': instance.itemId,
-      'itemPic': instance.itemPic
+      'itemPic': instance.itemPic,
+      'iosItemLowestprice':instance.iosItemLowestprice,
     };
 
 RoomTypePicModel _$RoomTypePicModelFromJson(Map<String, dynamic> json) {

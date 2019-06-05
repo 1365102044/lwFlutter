@@ -29,9 +29,6 @@ class _LwMePageState extends State<LwMePage> with AutomaticKeepAliveClientMixin{
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('title'),
-      ),
       body: Container(
         color: Color(0xfff5f5f5),
         child: ListView.separated(

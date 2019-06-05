@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/LwHomeSwiperWidget.dart';
@@ -18,7 +19,7 @@ class LwHomePage extends StatefulWidget {
 class _LwHomePageState extends State<LwHomePage>
     with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
-  List<BannerPicListModel> _bannerList = [];
+  List<lwSwiperModel> _bannerList = [];
   List<RoomTypeListModel> _roomList = [];
   List<ItemListModel> _itemlist = [];
 
@@ -36,6 +37,7 @@ class _LwHomePageState extends State<LwHomePage>
       'cityId': 'd94bba14-dec1-11e5-bcc3-00163e1c066c'
     }, (Response response) {
       LwResponse lwresponse = LwResponse.fromJson(jsonDecode(response.data));
+      print('-------------${response.toString()}');
       setState(() {
         _itemlist.clear();
         _roomList.clear();
@@ -46,16 +48,25 @@ class _LwHomePageState extends State<LwHomePage>
       print('-----------${error.descption()}');
     });
   }
-
+int getNumber(){
+  if(_itemlist.length == 0 &&_roomList.length == 0){
+    return 2;
+  }else if(_itemlist.length != 0 && _roomList.length != 0){
+  return 4;
+  }else{
+    return 3;
+  }
+}
   /// banner 数据
   void _getBannerList() async {
     LwNetworkUtils.requestDataWithPost(
         LWAPI.HOME_BANNER_URL, {'equipment': '2'}, (Response response) {
-      // print(response.data.toString());
       LwResponse lwresponse = LwResponse.fromJson(jsonDecode(response.data));
       setState(() {
         _bannerList.clear();
-        _bannerList.addAll(lwresponse.result.bannerPicList);
+        lwresponse.result.bannerPicList.forEach((v){
+          _bannerList.add(lwSwiperModel(v.picUrl));  
+        });
       });
     }, (ErrorModel error) {
       print(error.descption());
@@ -66,14 +77,12 @@ class _LwHomePageState extends State<LwHomePage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('首页'),
-      ),
+      appBar: lwAppBar('首页'),
       body: Container(
           color: Color(0xfff5f5f5),
           child: RefreshIndicator(
             child: ListView.separated(
-              itemCount: 4,
+              itemCount: getNumber(),
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return LwSwiperWidget(context, _bannerList);

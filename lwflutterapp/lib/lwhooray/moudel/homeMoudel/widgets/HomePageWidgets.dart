@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHousePage.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingListPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/lwHouseDeatilPage.dart';
 
 Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
@@ -14,11 +16,26 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
     hei = 210.0;
     // picurl = roomList[index].roomTypePic.big;
   }
+  // print('-----------------${modelList.length.toString()}');
+  dynamic model;
+  if (modelList != null && modelList.length > 0) {
+    model = modelList.first;
+  }
   return Column(
     children: <Widget>[
       Container(
         color: Colors.white,
-        child: HomeItemTopWidget(context, toptitle, topdesc),
+        child: HomeItemTopWidget(context, toptitle, topdesc, () {
+          if (model.runtimeType == RoomTypeListModel) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => LwHuXingListPage(modelList),
+            ));
+          } else {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => LwHousePage(modelList),
+            ));
+          }
+        }),
       ),
       Container(
         color: Colors.white,
@@ -27,39 +44,24 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
           itemCount: modelList.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            if (modelList.length == 0) {
-              print('+++++++++++++');
-              return Container(
-                height: 10.0,
-                color: Colors.yellow,
-              );
-            }
-            dynamic model = modelList[0];
-            print('-+++++++++++${model.toString()}');
             if (model.runtimeType == RoomTypeListModel) {
-              return GestureDetector(
-                child: HomeRowItemWidget(
-                    context,
-                    modelList[index].roomTypePic.big,
-                    modelList[index].itemName,
-                    modelList[index].roomTypeName),
-                onTap: () {
-                  print('+++++++++++++++=${model[index].id}');
-                },
-              );
+              return HomeRowItemWidget(
+                  context,
+                  modelList[index].roomTypePic.big,
+                  modelList[index].itemName,
+                  modelList[index].roomTypeName, callBackBlock: () {
+                print('+++++++++++++++=${model[index].id}');
+              });
             } else if (model.runtimeType == ItemListModel) {
-              return GestureDetector(
-                child: HomeRowItemWidget(context, modelList[index].itemPic.big,
-                    modelList[index].itemName, ''),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        lwHouseDeatilPage(modelList[index].itemId),
-                  ));
-                },
-              );
+              return HomeRowItemWidget(context, modelList[index].itemPic.big,
+                  modelList[index].itemName, '', callBackBlock: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      lwHouseDeatilPage(modelList[index].itemId),
+                ));
+              });
             } else {
-              print('+++++++++++++');
+              print('+++++++++++++没有数据时，+++++++++++++');
               return Container(
                 height: 0.0,
               );
@@ -72,36 +74,41 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
 }
 
 Widget HomeRowItemWidget(
-    BuildContext context, String picurl, String title, String desc) {
-  return Container(
-    padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-    child: Column(
-      children: <Widget>[
-        Container(
-            width: 230.0,
-            height: 150.0,
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(width: 0, color: Colors.white),
-                  borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                  image: DecorationImage(
-                    image: NetworkImage(picurl),
-                    fit: BoxFit.cover,
-                  )),
-            )),
-        Container(
-          child: lwDescTitle(title, fontsize: 14, maxline: 1),
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-        ),
-        Container(
-          child: lwDescTitle(desc, fontsize: 12, maxline: 1),
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-          height: (desc == '') ? 0 : 20.0,
-        ),
-      ],
+    BuildContext context, String picurl, String title, String desc,
+    {Function callBackBlock}) {
+  return GestureDetector(
+    child: Container(
+      padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+              width: 230.0,
+              height: 150.0,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0, color: Colors.white),
+                    borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                    image: DecorationImage(
+                      image: NetworkImage(picurl),
+                      fit: BoxFit.cover,
+                    )),
+              )),
+          Container(
+            child: lwDescTitle(title, fontsize: 14, maxline: 1),
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+          ),
+          Container(
+            child: lwDescTitle(desc, fontsize: 12, maxline: 1),
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+            height: (desc == '') ? 0 : 20.0,
+          ),
+        ],
+      ),
     ),
+    onTap: callBackBlock,
   );
 }
 
@@ -110,6 +117,7 @@ Widget HomeItemTopWidget(
   BuildContext context,
   String title,
   String descTitle,
+  Function callBack,
 ) {
   return Row(
     children: <Widget>[
@@ -131,7 +139,7 @@ Widget HomeItemTopWidget(
       Container(
         padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
         child: lwTextLeftIconRightWidget(
-            context, '查看更多', 'assets/home/arrow_right.png'),
+            context, '查看更多', 'assets/home/arrow_right.png', callBack),
       )
     ],
   );
@@ -180,11 +188,10 @@ Widget lwIconTopTextBottomWidget(
     {double iconW = 30.0,
     double iconH = 30.0,
     double fontsize = 15.0,
-    textcolor: Colors.black}) {
+    textcolor: Colors.black,
+    Function callBlackBlock}) {
   return GestureDetector(
-    onTap: () {
-      print('---------------你点击了：$text');
-    },
+    onTap: callBlackBlock,
     child: Container(
       child: Column(
         children: <Widget>[
@@ -218,12 +225,10 @@ Widget lwIconTopTextBottomWidget(
 }
 
 Widget lwTextLeftIconRightWidget(
-    BuildContext context, String text, String iconName,
+    BuildContext context, String text, String iconName, Function callBack,
     {iconW = 15.0, iconH = 15.0}) {
   return GestureDetector(
-    onTap: () {
-      print('--------你点击了：$text-------');
-    },
+    onTap: callBack,
     child: Container(
       child: Row(
         children: <Widget>[
@@ -268,5 +273,6 @@ Widget lwDescTitle(String text,
       color: textcolor,
       fontSize: fontsize,
     ),
+    textAlign: TextAlign.left,
   );
 }

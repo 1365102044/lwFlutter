@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
 
 Widget lwFillButton(String text, Function onTap,
     {backColor = Colors.red,
@@ -64,7 +65,7 @@ Widget lwTextField(
   );
 }
 
-Widget lwAppBarWidget(BuildContext context,String title) {
+Widget lwAppBarWidget(BuildContext context, String title) {
   return AppBar(
     title: Container(
       child: Text(title),
@@ -91,8 +92,70 @@ Widget lwAppBarWidget(BuildContext context,String title) {
     backgroundColor: Colors.blue, //导航栏和状态栏的的颜色
     // elevation: 10, //阴影的高度
     // bottom: PreferredSize(
-        // child: Text('bottom'), preferredSize: Size(30, 30)), // 在appbar下面显示的东西
+    // child: Text('bottom'), preferredSize: Size(30, 30)), // 在appbar下面显示的东西
     flexibleSpace: Text('d12321312'),
     titleSpacing: 10, //标题两边的空白区域,
+  );
+}
+
+Widget lwAppBar(String title) {
+  return AppBar(
+    title: Text(
+      title,
+      style: TextStyle(color: Colors.black),
+    ),
+    backgroundColor: Colors.white,
+    iconTheme: IconThemeData(
+      color: Colors.grey,
+    ),
+  );
+}
+
+Widget lwTabBarWidget(
+    BuildContext context, TabController tabbarcontrolelr, Map datas) {
+  return Container(
+    height: 56,
+    child: TabBar(
+      controller:
+          tabbarcontrolelr, //标签选择变化控制器(如果和TabBarView一起使用注意和TabBarView使用同一个controller)
+      isScrollable: false, //是否可以滑动 (发现未起作用)
+      indicatorColor: Colors.white, //按钮底部的指示器颜色（下划线颜色）
+      indicatorWeight: 0.1, //按钮底部的指示器高度
+      indicatorPadding: EdgeInsets.all(10), //按钮底部的指示器距离底部的距离
+      // indicatorSize: TabBarIndicatorSize.label, //按钮底部的指示器宽度
+      labelColor: Colors.orange, // 选中的标签的颜色
+      labelStyle: new TextStyle(fontSize: 12), // 选中的标签的颜色
+      unselectedLabelColor: Colors.black, // 未选中的标签的颜色
+      unselectedLabelStyle: new TextStyle(fontSize: 12), // 未选中的标签的样式
+      // labelPadding: EdgeInsets.all(0),
+      tabs: getTabsWidget(context, datas),
+    ),
+  );
+}
+
+List<Widget> getTabsWidget(BuildContext context, Map datas) {
+  List<Widget> widgets = [];
+  datas.forEach((k, v) {
+    widgets.add(tabsItemsWidget(context,'assets/tabbar/' + v + '.png', k));
+  });
+  return widgets;
+}
+
+Widget tabsItemsWidget(BuildContext context,String iconName, String itemName) {
+  return Container(
+    child: Column(
+      children: <Widget>[
+        Container(
+          width: 25,
+          height: 25,
+          margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+          child: Image.asset(iconName),
+        ),
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+          child: Text(itemName),
+        )
+      ],
+    ),
   );
 }

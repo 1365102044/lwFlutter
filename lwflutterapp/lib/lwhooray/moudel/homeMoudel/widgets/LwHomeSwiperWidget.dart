@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 
+class lwSwiperModel{
+  String picUrl;
+  lwSwiperModel(this.picUrl);
+}
 /// 轮播图
-Widget LwSwiperWidget (BuildContext context,List<BannerPicListModel>bannerList){
+Widget LwSwiperWidget (BuildContext context,List<lwSwiperModel>bannerList){
   Widget widget;
 
   widget = bannerList.length >0 ? Swiper(

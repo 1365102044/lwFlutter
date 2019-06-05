@@ -76,9 +76,7 @@ class _LwLoginPageState extends State<LwLoginPage>
         title: '登录',
         home: Scaffold(
             resizeToAvoidBottomPadding: false,
-            appBar: AppBar(
-              title: Text('登录'),
-            ),
+            appBar: lwAppBar('登录'),
             body: SingleChildScrollView(
                 child: GestureDetector(
               child: Container(

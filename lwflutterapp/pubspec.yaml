@@ -32,7 +32,8 @@ dependencies:
   flutter_webview_plugin: ^0.3.0+2
   # 添加sharedPreference依赖
   shared_preferences: ^0.5.0
-  
+  url_launcher: ^3.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -92,22 +93,13 @@ flutter:
     - toolbarShare.png
     - detailAdd.png
 
-    - assets/home/city_icon.png
-    - assets/home/dituzhaofang.png
-    - assets/home/home_placeHoler_poppic.png
-    - assets/home/jingdongshangcheng.png
-    - assets/home/message_nor.png
-    - assets/home/message_sel.png
-    - assets/home/yudingfangyuan.png
-    - assets/home/yuyuekanfang.png
-    - assets/home/zaixianqianyue.png
-    - assets/home/arrow_right.png
-    - assets/house/location_icon.jpg
+    - assets/home/
+    - assets/house/
+    - assets/house/sheshi/
     - assets/me/
-    # me_top_bg.png
-    # - assets/me/mine_ad.png
-    # - assets/me/accountDefultIcon.png
     - assets/me/func_icon/
+    - assets/tabbar/
+    - assets/launchimage/
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

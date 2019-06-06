@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
+import 'package:lwflutterapp/main.dart';
 
 Widget lwFillButton(String text, Function onTap,
     {backColor = Colors.red,
@@ -65,7 +66,7 @@ Widget lwTextField(
   );
 }
 
-Widget lwAppBarWidget(BuildContext context, String title) {
+Widget lwAppBarForHomePageWidget(BuildContext context, String title) {
   return AppBar(
     title: Container(
       child: Text(title),
@@ -98,7 +99,7 @@ Widget lwAppBarWidget(BuildContext context, String title) {
   );
 }
 
-Widget lwAppBar(String title) {
+Widget lwAppBar(String title,{Widget leadingWidget}) {
   return AppBar(
     title: Text(
       title,
@@ -108,6 +109,8 @@ Widget lwAppBar(String title) {
     iconTheme: IconThemeData(
       color: Colors.grey,
     ),
+    leading: leadingWidget,
+    // automaticallyImplyLeading: false,
   );
 }
 
@@ -136,12 +139,12 @@ Widget lwTabBarWidget(
 List<Widget> getTabsWidget(BuildContext context, Map datas) {
   List<Widget> widgets = [];
   datas.forEach((k, v) {
-    widgets.add(tabsItemsWidget(context,'assets/tabbar/' + v + '.png', k));
+    widgets.add(tabsItemsWidget(context, 'assets/tabbar/' + v + '.png', k));
   });
   return widgets;
 }
 
-Widget tabsItemsWidget(BuildContext context,String iconName, String itemName) {
+Widget tabsItemsWidget(BuildContext context, String iconName, String itemName) {
   return Container(
     child: Column(
       children: <Widget>[

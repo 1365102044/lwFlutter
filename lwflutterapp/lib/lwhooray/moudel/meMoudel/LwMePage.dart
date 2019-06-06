@@ -12,13 +12,9 @@ class _LwMePageState extends State<LwMePage> with AutomaticKeepAliveClientMixin{
   bool get wantKeepAlive => true;
   @override
 
-  
   void initState() {
     super.initState();
-    
-    print('--------1-------me');
     _checkLoginStatus();
-
   }
 
   _checkLoginStatus() async {

@@ -33,7 +33,14 @@ dependencies:
   # 添加sharedPreference依赖
   shared_preferences: ^0.5.0
   url_launcher: ^3.0.3
+  path_provider: ^0.4.1
+  # 图片缓存
+  crypto: ^2.0.6
+  azlistview: ^0.1.2
+  # 获取拼音
+  lpinyin: ^1.0.7
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

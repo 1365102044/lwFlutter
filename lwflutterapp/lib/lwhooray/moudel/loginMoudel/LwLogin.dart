@@ -54,6 +54,7 @@ class _LwLoginPageState extends State<LwLoginPage>
       if (lwresponse != null && lwresponse.status.code == '200') {
         if (lwresponse.result != null) {
           lwLocalDataUtils.saveAccountInforWithLogin(lwresponse.result);
+          Navigator.pop(context);
         }
         print(
             '--------------token:${lwLocalDataUtils.getData(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY, valueType: '')}');

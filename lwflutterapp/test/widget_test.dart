@@ -5,6 +5,8 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,15 +30,18 @@ void main() {
 
     
 
-
-    Response response = await Dio().get('http://www.baidu.com');
-    prints(response);
+    // Response response = await Dio().get('http://www.baidu.com');
+    // prints(response);
     
+
+  List<String> mylist = ['z','b','f','e','a'];
+  mylist.sort((s1,s2){
+    return s1.compareTo(s2);
+  });
+  print('==============${mylist.toString()}');
+
+
   });
 }
 
-class LWcalss {
-  String name;
-  int age;
-  LWcalss(this.age, this.name);
-}
+

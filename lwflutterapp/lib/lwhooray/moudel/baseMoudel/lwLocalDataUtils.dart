@@ -61,14 +61,15 @@ class lwLocalDataUtils {
   Future<Null> isLoginStatue(BuildContext context) async{
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       String account_token = sharedPreferences.getString(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY);
+      print('+++++++++account_token:$account_token');
       if (account_token != null && account_token != '') {
+        print('========已登录登录：$context');
+        // return true;
+      }else{
         print('========未登录：$context');
         Navigator.push(context, MaterialPageRoute(
            builder: (context) => LwLoginPage(),
         ));
-        // return true;
-      }else{
-        
         
         // return false;
       }

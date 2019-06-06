@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
+
 
 class lwSwiperModel{
   String picUrl;
   lwSwiperModel(this.picUrl);
 }
+
 /// 轮播图
 Widget LwSwiperWidget (BuildContext context,List<lwSwiperModel>bannerList){
   Widget widget;
@@ -17,7 +19,7 @@ Widget LwSwiperWidget (BuildContext context,List<lwSwiperModel>bannerList){
     duration: 500,
     autoplay: true,
     itemBuilder: (BuildContext context,int index){
-      return Image.network(bannerList[index].picUrl,fit:BoxFit.cover);
+      return lwImageWithNetWork(bannerList[index].picUrl);
     },
     pagination: SwiperPagination(
       builder: DotSwiperPaginationBuilder(

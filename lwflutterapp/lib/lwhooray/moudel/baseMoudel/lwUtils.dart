@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
+import 'package:lwflutterapp/lwhooray/tool/network_image.dart' as network;
+
 class lwUtils{
 
 /// 弹框提示----------
@@ -32,4 +34,8 @@ class lwUtils{
             ));
   }
 
+}
+
+Image lwImageWithNetWork(String url,{BoxFit customfit = BoxFit.cover}){
+  return Image(image: network.NetworkImage(url),fit: customfit,);
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
@@ -274,5 +275,28 @@ Widget lwDescTitle(String text,
       fontSize: fontsize,
     ),
     textAlign: TextAlign.left,
+  );
+}
+
+Widget homeLeadingBtn(BuildContext context,String text,{Function callBlackBlock}){
+  return GestureDetector(
+    child: Container(
+
+    margin: EdgeInsets.fromLTRB(10, 20, 0, 5),
+    padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+    color: Colors.red,
+    child: Container(
+      height: 150,
+      width: 100,
+      child: Center(
+        child: Text(text,style: TextStyle(color: Colors.black,)),
+      ),
+      decoration: BoxDecoration(
+      border: Border.all(color: Colors.black,width: 1),
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+    ),
+    ),
+  ),
+  onTap:callBlackBlock,
   );
 }

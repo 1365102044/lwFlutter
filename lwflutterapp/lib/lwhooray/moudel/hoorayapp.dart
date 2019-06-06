@@ -40,20 +40,20 @@ class HoorayAppSatate extends State<Hoorayapp>
 
     // controller.index = 0;
 
-    // controller.addListener(() {
-    //   if (controller.indexIsChanging) {
-    //     print('------------${controller.index.toString()}');
-    //     if (controller.index == 3) {
-    //       // print('--------${isLogin.toString()}');
-    //       // if (isLogin) {
-    //       //   // 已登录
-    //       // } else {
-    //       //   /// 未登录
-    //       // }
-    //     }
-    //     print('=====${controller.index}');
-    //   }
-    // });
+    controller.addListener(() {
+      if (controller.indexIsChanging) {
+        print('------------${controller.index.toString()}');
+        if (controller.index == 3) {
+          // print('--------${isLogin.toString()}');
+          // if (isLogin) {
+          //   // 已登录
+          // } else {
+          //   /// 未登录
+          // }
+        }
+        print('=====${controller.index}');
+      }
+    });
   }
 
   @override

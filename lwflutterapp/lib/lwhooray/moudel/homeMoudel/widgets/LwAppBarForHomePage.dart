@@ -40,7 +40,6 @@ class lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print('----------navi:${MediaQuery.of(context).padding.top}');
     return Container(
       child: Row(
         children: <Widget>[

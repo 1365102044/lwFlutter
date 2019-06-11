@@ -62,7 +62,6 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
               });
               
             } else {
-              print('+++++++++++++没有数据时，+++++++++++++');
               return Container(
                 height: 0.0,
               );

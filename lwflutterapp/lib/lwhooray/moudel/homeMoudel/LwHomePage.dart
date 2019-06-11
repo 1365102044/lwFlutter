@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lwflutterapp/demo/d4.dart';
-import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwCityListModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';

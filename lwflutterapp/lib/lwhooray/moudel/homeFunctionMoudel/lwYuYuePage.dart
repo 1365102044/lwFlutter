@@ -30,12 +30,14 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
   }
 
   getProjectInfor() async{
+    
     LwNetworkUtils.requestDataWithPost(LWAPI.HOUSE_PROJECT_LIST_INFOR_BY_CITYID_URL, {'cityId':'d94bba14-dec1-11e5-bcc3-00163e1c066c'}, (Response response){
       
     lwProjectsInforModel res = lwProjectsInforModel.fromJson(jsonDecode(response.data));
     _projectList.addAll(res.result.list);
     print('++++++++');
     print(_projectList);
+    
     }, (ErrorModel error){
       print('+++++++++error:${error.descption()}');
     });

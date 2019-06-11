@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'baseMoudel/lwLocalDataUtils.dart';
 import 'find.dart';
@@ -18,12 +19,23 @@ class Hoorayapp extends StatefulWidget {
 
 class HoorayAppSatate extends State<Hoorayapp>
     with SingleTickerProviderStateMixin {
+  static const platform = const MethodChannel('samples.flutter.io/battery');
+
   TabController controller;
 
   @override
   initState() {
     super.initState();
     controller = new TabController(length: 4, vsync: this);
+    platform.setMethodCallHandler((MethodCall call){
+      if(call.method == 'routes'){
+        if(call.arguments.toString() == 'house'){
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => LwHousePage(null),
+          ));
+        }
+      }
+    });
   }
 
   @override
@@ -44,12 +56,6 @@ class HoorayAppSatate extends State<Hoorayapp>
       if (controller.indexIsChanging) {
         print('------------${controller.index.toString()}');
         if (controller.index == 3) {
-          // print('--------${isLogin.toString()}');
-          // if (isLogin) {
-          //   // 已登录
-          // } else {
-          //   /// 未登录
-          // }
         }
         print('=====${controller.index}');
       }
@@ -79,6 +85,9 @@ class HoorayAppSatate extends State<Hoorayapp>
           }),
         ),
       ),
+      // routes: <String, WidgetBuilder>{
+        
+      // },
     );
   }
 }

@@ -1,52 +1,56 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../LwHomePage.dart';
+
 /// 自定义 APPbar
 class lwAppBarForHomePage extends StatefulWidget
     implements PreferredSizeWidget {
   String title = '';
   String leftText;
   Function callBlackBlock;
-  lwAppBarForHomePage(this.title, {this.leftText, this.callBlackBlock});
+  BuildContext context;
+  lwAppBarForHomePage(this.title,{Key key,this.leftText, this.callBlackBlock}):super(key: key);
   @override
-  _lwAppBarForHomePageState createState() => _lwAppBarForHomePageState();
+  lwAppBarForHomePageState createState() => lwAppBarForHomePageState();
   @override
-  Size get preferredSize => Size.fromHeight(55);
+  Size get preferredSize => Size.fromHeight(64);
 }
 
-class _lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
+class lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
   String _title;
   String _leftText;
+  BuildContext _context;
   Function _callBlackBlock;
+
+  GlobalKey myKey = new GlobalKey();
   @override
   void initState() {
     super.initState();
-    print('---------3333-$_title');
+    
     setState(() {
-      print('---------3333-$_title');
       _title = widget.title;
       _leftText = widget.leftText;
       _callBlackBlock = widget.callBlackBlock;
     });
   }
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print('-------------didChangeDependencies');
+   void changeLeftText(String str){
+    _leftText = str;
   }
 
   @override
   Widget build(BuildContext context) {
+    // print('----------navi:${MediaQuery.of(context).padding.top}');
     return Container(
       child: Row(
         children: <Widget>[
           GestureDetector(
             child: Container(
-              margin: EdgeInsets.fromLTRB(10, 50, 0, 5),
+              margin:(MediaQuery.of(context).padding.top != 44.0) ?EdgeInsets.fromLTRB(10, 35, 0, 5) :EdgeInsets.fromLTRB(10, 50, 0, 5),
               padding: EdgeInsets.fromLTRB(10, 8, 1, 10),
               // color: Colors.red,
               child: Container(
-                height: 40,
+                height: 31,
                 width: 70,
                 child: Center(
                   child: Text(_leftText,
@@ -68,7 +72,7 @@ class _lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
             Expanded(
               child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(0, 40, 90, 0),
+              padding:(MediaQuery.of(context).padding.top != 44.0) ?EdgeInsets.fromLTRB(0, 30, 90, 0) : EdgeInsets.fromLTRB(0, 40, 90, 0),
               child: Container(
                 child: Text(
                   _title,

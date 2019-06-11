@@ -46,11 +46,11 @@ class lwLocalDataUtils {
 
   static getData(String key,{dynamic valueType}) async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print('------valuetype:$valueType');
+    // print('------valuetype:$valueType');
     if (valueType.runtimeType == String) {
-      print('--------1----${sharedPreferences.getString(key)}--------$key');
-      String value = sharedPreferences.getString(key);
-      return value;
+      // print('--------1----${sharedPreferences.getString(key)}--------$key');
+      // String value =  sharedPreferences.getString(key);
+      return sharedPreferences.getString(key);
     }else{
       print('--------2');
       return sharedPreferences.getString(key);

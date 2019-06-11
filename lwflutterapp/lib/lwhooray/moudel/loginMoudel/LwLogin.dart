@@ -56,8 +56,6 @@ class _LwLoginPageState extends State<LwLoginPage>
           lwLocalDataUtils.saveAccountInforWithLogin(lwresponse.result);
           Navigator.pop(context);
         }
-        print(
-            '--------------token:${lwLocalDataUtils.getData(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY, valueType: '')}');
       } else {
         lwUtils.showAlertDialog(
             context,
@@ -132,11 +130,7 @@ class _LwLoginPageState extends State<LwLoginPage>
                 ),
               ),
               onTap: () async {
-                SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                String vle = sharedPreferences
-                    .getString(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY);
-                print('--------------token:$vle');
+                
                 
                 
                 // bool isl = await lwLocalDataUtils().isLoginStatue(context);

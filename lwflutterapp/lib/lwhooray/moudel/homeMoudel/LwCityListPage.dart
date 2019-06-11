@@ -71,9 +71,6 @@ class _LwCityPageState extends State<LwCityPage> {
                     if (model.type == 1) {
                       return;
                     }
-                    print('**********点击了：${model.name}');
-                    print('**********点击了：${context}');
-                    lwNotification(model).dispatch(context);
                     Navigator.pop(context,model);
                   },
                 ),
@@ -87,8 +84,3 @@ class _LwCityPageState extends State<LwCityPage> {
   }
 }
 
-
-class lwNotification extends Notification{
-  CityList cityModel;
-  lwNotification(this.cityModel);
-}

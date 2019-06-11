@@ -34,7 +34,6 @@ class _lwHouseDeatilPageState extends State<lwHouseDeatilPage> {
       setState(() {
         _houseDeatilModel =
             LwHouseDeatilModel.fromJson(jsonDecode(response.data));
-        print('--------------${_houseDeatilModel.result.toString()}');
         _houseDeatilModel.result.picArr.forEach((v) {
           _bannerList.add(lwSwiperModel(v.big));
         });

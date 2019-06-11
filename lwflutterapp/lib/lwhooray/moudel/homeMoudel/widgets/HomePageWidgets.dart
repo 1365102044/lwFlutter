@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/lwYuYuePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHousePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingListPage.dart';
@@ -15,9 +16,7 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
     topdesc = '房子可以租，生活不将就';
     toptitle = '热门户型';
     hei = 210.0;
-    // picurl = roomList[index].roomTypePic.big;
   }
-  // print('-----------------${modelList.length.toString()}');
   dynamic model;
   if (modelList != null && modelList.length > 0) {
     model = modelList.first;
@@ -61,6 +60,7 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
                       lwHouseDeatilPage(modelList[index].itemId),
                 ));
               });
+              
             } else {
               print('+++++++++++++没有数据时，+++++++++++++');
               return Container(
@@ -147,12 +147,12 @@ Widget HomeItemTopWidget(
 }
 
 /// 首页中的功能条
-Widget HomeFuncItemsWidget(BuildContext context) {
-  Map<String, String> dataMap = {};
-  List<Widget> rowWidgets = [];
-  dataMap.forEach((k, v) {
-    rowWidgets.add(lwIconTopTextBottomWidget(context, k, v));
-  });
+Widget HomeFuncItemsWidget(BuildContext context,{Function callBlackBlock}) {
+  // Map<String, String> dataMap = {};
+  // List<Widget> rowWidgets = [];
+  // dataMap.forEach((k, v) {
+  //   rowWidgets.add(lwIconTopTextBottomWidget(context, k, v));
+  // });
 
   return Container(
     color: Colors.white,
@@ -160,29 +160,53 @@ Widget HomeFuncItemsWidget(BuildContext context) {
       children: <Widget>[
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '地图找房', 'assets/home/dituzhaofang.png'),
+              context, '地图找房', 'assets/home/dituzhaofang.png',
+              callBlackBlock: callBlackBlock('地图找房')),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '预约看房', 'assets/home/yuyuekanfang.png'),
+              context, '预约看房', 'assets/home/yuyuekanfang.png',callBlackBlock:(){
+              print('-----------点击了预约看房:$context-----------');
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => lwYuYuePage(),
+                ));
+              }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '预定房源', 'assets/home/yudingfangyuan.png'),
+              context, '预定房源', 'assets/home/yudingfangyuan.png',callBlackBlock: (){
+                print('-----------点击了预定房源-----------');
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => lwYuYuePage(),
+                // ));
+              }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '签约房源', 'assets/home/zaixianqianyue.png'),
+              context, '签约房源', 'assets/home/zaixianqianyue.png',callBlackBlock: (){
+                print('-----------点击了签约房源${context}-----------');
+                
+              }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '购物商城', 'assets/home/jingdongshangcheng.png'),
+              context, '购物商城', 'assets/home/jingdongshangcheng.png',callBlackBlock: (){
+                print('-----------点击了购物商城-----------');
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => lwYuYuePage(),
+                // ));
+              }),
         ),
       ],
     ),
   );
 }
 
+void handleCallBlackBlock(BuildContext context){
+ Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => lwYuYuePage(),
+                ));
+}
 /// 文字在下图片在上组件
 Widget lwIconTopTextBottomWidget(
     BuildContext context, String text, String iconName,
@@ -191,9 +215,11 @@ Widget lwIconTopTextBottomWidget(
     double fontsize = 15.0,
     textcolor: Colors.black,
     Function callBlackBlock}) {
-  return GestureDetector(
+  return Container(
+    child: GestureDetector(
     onTap: callBlackBlock,
     child: Container(
+      color: Colors.red,
       child: Column(
         children: <Widget>[
           Container(
@@ -222,6 +248,7 @@ Widget lwIconTopTextBottomWidget(
         ],
       ),
     ),
+  ),
   );
 }
 

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lwflutterapp/lwhooray/moudel/find.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
 import 'package:lwflutterapp/main.dart';
+
+class LWCOLOR {
+  /// 背景色
+  static final Color LWCOLOR_BACKGROUND = Color(0xfff5f5f5);
+}
 
 Widget lwFillButton(String text, Function onTap,
     {backColor = Colors.red,
@@ -99,7 +105,7 @@ Widget lwAppBarForHomePageWidget(BuildContext context, String title) {
   );
 }
 
-Widget lwAppBar(String title,{Widget leadingWidget}) {
+Widget lwAppBar(String title, {Widget leadingWidget}) {
   return AppBar(
     title: Text(
       title,
@@ -160,5 +166,80 @@ Widget tabsItemsWidget(BuildContext context, String iconName, String itemName) {
         )
       ],
     ),
+  );
+}
+
+Widget cellArrowWidget(String leftText,
+    {String rightText,
+    bool isHaveRightIcon,
+    Function callBackBlock}) {
+  return GestureDetector(
+    child: Container(
+      color: Colors.white,
+      height: 50,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Text(
+                    leftText,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                Expanded(
+                    child: Container(
+                  child: Text(
+                    rightText,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                )),
+                Container(
+                  width: isHaveRightIcon ? 22 : 0,
+                  height: isHaveRightIcon ? 22 : 0,
+                  child: Image.asset('assets/home/arrow_right.png'),
+                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            height: 1,
+            color: Colors.black,
+          ),
+        ],
+      ),
+    ),
+    onTap: callBackBlock,
+  );
+}
+
+
+  lwShowAlertList(BuildContext context,String title,List<String> datas,{Function callBlackBlock}){
+  showDialog(context: context,
+  builder: (BuildContext context){
+    return AlertDialog(
+      title: Center(child: Text(title),),
+      content: Container(
+        width: MediaQuery.of(context).size.width*0.8,
+        height: MediaQuery.of(context).size.height*0.5,
+        child: ListView.builder(
+          itemCount: datas.length,
+          itemBuilder: (BuildContext context,int index){
+            return GestureDetector(
+              child: Container(
+              child: Text(datas[index]),
+            ),
+            onTap: callBlackBlock,
+            );
+          }
+        ),
+      ),
+    );
+  }
+
   );
 }

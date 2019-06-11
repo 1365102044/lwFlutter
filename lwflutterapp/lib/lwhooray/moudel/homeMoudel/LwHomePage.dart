@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lwflutterapp/demo/d4.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwCityListModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
@@ -28,25 +29,19 @@ class _LwHomePageState extends State<LwHomePage>
   List<RoomTypeListModel> _roomList = [];
   List<ItemListModel> _itemlist = [];
   String _localCity ;
+  // 1. 创建 globalKey
+  GlobalKey<lwAppBarForHomePageState> globalKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
-_localCity = '北京';
+    _localCity = '北京';
     /// banner 图
     _getBannerList();
     _getTuiJianList();
     _getCityInforList();
 
-    NotificationListener<lwNotification>(
-      onNotification: (noti) {
-        print('+++++++++++++');
-        print('+++++++++++++${noti}');
-        setState(() {
-          _localCity = (noti as CityList).name;
-        });
-      },
-      child: null,
-    );
+   
   }
 
   void _getCityInforList() async {
@@ -63,7 +58,6 @@ _localCity = '北京';
       'cityId': 'd94bba14-dec1-11e5-bcc3-00163e1c066c'
     }, (Response response) {
       LwResponse lwresponse = LwResponse.fromJson(jsonDecode(response.data));
-      print('-------------${response.toString()}');
       setState(() {
         _itemlist.clear();
         _roomList.clear();
@@ -101,23 +95,25 @@ _localCity = '北京';
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       appBar: lwAppBarForHomePage(
         '首页',
+        key: globalKey,
         leftText: _localCity,
         callBlackBlock: () {
           Navigator.of(context)
               .push(MaterialPageRoute(
                   builder: (context) => LwCityPage(_cityInfors)))
               .then((cityModel) {
-            print('++++++++++++++++++++++++++22${cityModel.name}');
             setState(() {
-              print('++++++++++++++++++++++++++${cityModel.name}');
               _localCity = cityModel.name;
-              print('++++++++++++++++++++++++++$_localCity');
+              globalKey.currentState.changeLeftText(cityModel.name);
+              print('++++++++++++++++++++++++++_localCity:$_localCity');
             });
           });
         },
@@ -127,11 +123,13 @@ _localCity = '北京';
           child: RefreshIndicator(
             child: ListView.separated(
               itemCount: getNumber(),
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext context,int index) {
                 if (index == 0) {
                   return LwSwiperWidget(context, _bannerList);
                 } else if (index == 1) {
-                  return HomeFuncItemsWidget(context);
+                  return HomeFuncItemsWidget(context,callBlackBlock: (String name){
+                     print('-----------点击了$name-----------');
+                  });
                 } else if (index == 2) {
                   return HomeColumsItemWidget(context, _itemlist);
                 } else if (index == 3) {

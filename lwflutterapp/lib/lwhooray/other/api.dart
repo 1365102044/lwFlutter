@@ -30,6 +30,10 @@ class LWAPI{
   static final String HOUSE_HUXING_LIST_DATA_URL = 'v2/clientAPP/app/get_room_type_list';
   /// 户型详情
   static final String HOUSE_HUXING_LIST_DEATIL_DATA_URL = 'v2/clientAPP/app/get_roomType_details';
+  /// 获取项目列表名称
+  static final String HOUSE_PROJECT_LIST_INFOR_BY_CITYID_URL = 'v2/clientAPP/app/get_itemList_by_cityId';
+  /// 获取户型列表 {houseItemId:}
+  static final String HOUSE_HUXING_LIST_INFOR_BY_ITEMID_URL = 'v2/clientAPP/app/get_roomTypeList_by_itemId';
 
 
   /// 使用密码登录

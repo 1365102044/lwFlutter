@@ -207,8 +207,8 @@ Widget cellArrowWidget(String leftText,
             ),
           ),
           Divider(
-            height: 1,
-            color: Colors.black,
+            height: 0.5,
+            color: Colors.grey,
           ),
         ],
       ),
@@ -218,28 +218,42 @@ Widget cellArrowWidget(String leftText,
 }
 
 
-  lwShowAlertList(BuildContext context,String title,List<String> datas,{Function callBlackBlock}){
+  lwShowAlertList(BuildContext context,String title,List<String> datas,{Function callBlackBlock(int index)}){
   showDialog(context: context,
   builder: (BuildContext context){
     return AlertDialog(
       title: Center(child: Text(title),),
       content: Container(
         width: MediaQuery.of(context).size.width*0.8,
-        height: MediaQuery.of(context).size.height*0.5,
+        height: MediaQuery.of(context).size.height*0.4,
         child: ListView.builder(
           itemCount: datas.length,
+          shrinkWrap: true,
           itemBuilder: (BuildContext context,int index){
-            return GestureDetector(
-              child: Container(
-              child: Text(datas[index]),
-            ),
-            onTap: callBlackBlock,
-            );
-          }
+            return Container(
+              child: GestureDetector(
+                child: Column(
+                children: <Widget>[
+                  Container(
+                    color: Colors.white,
+                    alignment: Alignment.centerLeft,
+                    child: Text(datas[index]),
+                    height: 30,
+                  ),
+                  Divider(),
+                ],
+              ),
+                onTap:(){
+                  callBlackBlock(index);
+                  Navigator.of(context).pop();
+                },
+              )
+              
+              );
+          },
         ),
       ),
     );
   }
-
   );
 }

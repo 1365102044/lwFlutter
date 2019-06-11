@@ -62,11 +62,10 @@ class _LwLoginPageState extends State<LwLoginPage>
             '登录失败',
             (lwresponse != null && lwresponse.status != null)
                 ? lwresponse.status.msg
-                : '未知错误',
-            null);
+                : '未知错误',);
       }
     }, (ErrorModel error) {
-      lwUtils.showAlertDialog(context, '登录失败', error.msg, null);
+      lwUtils.showAlertDialog(context, '登录失败', error.msg,);
     });
   }
 

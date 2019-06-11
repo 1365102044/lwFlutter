@@ -218,7 +218,7 @@ Widget lwIconTopTextBottomWidget(
     child: GestureDetector(
     onTap: callBlackBlock,
     child: Container(
-      color: Colors.red,
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           Container(

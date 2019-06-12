@@ -36,6 +36,7 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
   ///loginCellPhone
   String _mendianText = '请选择门店';
   String _huxingText = '请选择户型';
+  String _wantTimeText = '选择时间';
   List<ListModel> _projectList = [];
   List<HuXingModel> _huxingList = [];
   @override
@@ -120,6 +121,19 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
     });
   }
 
+  /// 选择日期
+  chooseDate(){
+    lwUtils.lwShowDetePicker(context,onChanged: (date){
+      print('-------------onchanged:$date');
+    },onConfirm: (date){
+    print('------------------onConfirm:$date');
+    setState(() {
+      _wantTimeText = date;
+      _paramMap['seetTime'] = date;
+    });
+    });
+  }
+
   /// 提交信息
   commitInfor() {
     print('------------_paramMap:');
@@ -141,9 +155,9 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
       lwUtils.showAlertDialog(context, '恭喜你', '预约成功，稍后管家会与你取得联系',callblack: (){
         Navigator.pop(context);
       });
-    }, (ErrorModel error){});
-    
+    }, (ErrorModel error){}); 
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -198,9 +212,9 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
                       callBackBlock: choosehuXing)),
               Container(
                   child: cellArrowWidget('期望入住时间',
-                      rightText: '选择时间',
+                      rightText: _wantTimeText,
                       isHaveRightIcon: true,
-                      callBackBlock: () {})),
+                      callBackBlock: chooseDate)),
               Container(
                 margin: EdgeInsets.fromLTRB(20, 30, 20, 20),
                 height: 40,

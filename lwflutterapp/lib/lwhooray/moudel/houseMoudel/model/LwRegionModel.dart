@@ -1,10 +1,10 @@
-class LwCityListModel {
+class LwRegionModelResponse {
   Result result;
   Status status;
 
-  LwCityListModel({this.result, this.status});
+  LwRegionModelResponse({this.result, this.status});
 
-  LwCityListModel.fromJson(Map<String, dynamic> json) {
+  LwRegionModelResponse.fromJson(Map<String, dynamic> json) {
     result =
         json['result'] != null ? new Result.fromJson(json['result']) : null;
     status =
@@ -24,15 +24,15 @@ class LwCityListModel {
 }
 
 class Result {
-  List<CityList> list;
+  List<RegionModel> list;
 
   Result({this.list});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
-      list = new List<CityList>();
+      list = new List<RegionModel>();
       json['list'].forEach((v) {
-        list.add(new CityList.fromJson(v));
+        list.add(new RegionModel.fromJson(v));
       });
     }
   }
@@ -46,30 +46,42 @@ class Result {
   }
 }
 
-class CityList {
+class RegionModel {
+  String townName;
+  String cityName;
   double lng;
   String cityCode;
-  String name;
   String id;
+  String cityId;
   double lat;
-  double type = 0;
 
-  CityList({this.lng, this.cityCode, this.name, this.id, this.lat,this.type});
+  RegionModel(
+      {this.townName,
+      this.cityName,
+      this.lng,
+      this.cityCode,
+      this.id,
+      this.cityId,
+      this.lat});
 
-  CityList.fromJson(Map<String, dynamic> json) {
+  RegionModel.fromJson(Map<String, dynamic> json) {
+    townName = json['townName'];
+    cityName = json['cityName'];
     lng = json['lng'];
     cityCode = json['cityCode'];
-    name = json['name'];
     id = json['id'];
+    cityId = json['cityId'];
     lat = json['lat'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['townName'] = this.townName;
+    data['cityName'] = this.cityName;
     data['lng'] = this.lng;
     data['cityCode'] = this.cityCode;
-    data['name'] = this.name;
     data['id'] = this.id;
+    data['cityId'] = this.cityId;
     data['lat'] = this.lat;
     return data;
   }
@@ -93,5 +105,4 @@ class Status {
     return data;
   }
 }
-
 

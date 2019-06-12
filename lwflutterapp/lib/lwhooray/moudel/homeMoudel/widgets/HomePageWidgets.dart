@@ -6,6 +6,7 @@ import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHousePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingListPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/lwHouseDeatilPage.dart';
+import 'dart:math' as math;
 
 Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
   String topdesc = '只生活，不漂泊，你值得一寓';
@@ -60,7 +61,6 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
                       lwHouseDeatilPage(modelList[index].itemId),
                 ));
               });
-              
             } else {
               return Container(
                 height: 0.0,
@@ -146,7 +146,7 @@ Widget HomeItemTopWidget(
 }
 
 /// 首页中的功能条
-Widget HomeFuncItemsWidget(BuildContext context,{Function callBlackBlock}) {
+Widget HomeFuncItemsWidget(BuildContext context, {Function callBlackBlock}) {
   // Map<String, String> dataMap = {};
   // List<Widget> rowWidgets = [];
   // dataMap.forEach((k, v) {
@@ -164,48 +164,52 @@ Widget HomeFuncItemsWidget(BuildContext context,{Function callBlackBlock}) {
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '预约看房', 'assets/home/yuyuekanfang.png',callBlackBlock:(){
-              print('-----------点击了预约看房:$context-----------');
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => lwYuYuePage(),
-                ));
-              }),
+              context, '预约看房', 'assets/home/yuyuekanfang.png',
+              callBlackBlock: () {
+            print('-----------点击了预约看房:$context-----------');
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => lwYuYuePage(),
+            ));
+          }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '预定房源', 'assets/home/yudingfangyuan.png',callBlackBlock: (){
-                print('-----------点击了预定房源-----------');
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) => lwYuYuePage(),
-                // ));
-              }),
+              context, '预定房源', 'assets/home/yudingfangyuan.png',
+              callBlackBlock: () {
+            print('-----------点击了预定房源-----------');
+            // Navigator.of(context).push(MaterialPageRoute(
+            //   builder: (context) => lwYuYuePage(),
+            // ));
+          }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '签约房源', 'assets/home/zaixianqianyue.png',callBlackBlock: (){
-                print('-----------点击了签约房源${context}-----------');
-                
-              }),
+              context, '签约房源', 'assets/home/zaixianqianyue.png',
+              callBlackBlock: () {
+            print('-----------点击了签约房源${context}-----------');
+          }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
-              context, '购物商城', 'assets/home/jingdongshangcheng.png',callBlackBlock: (){
-                print('-----------点击了购物商城-----------');
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) => lwYuYuePage(),
-                // ));
-              }),
+              context, '购物商城', 'assets/home/jingdongshangcheng.png',
+              callBlackBlock: () {
+            print('-----------点击了购物商城-----------');
+            // Navigator.of(context).push(MaterialPageRoute(
+            //   builder: (context) => lwYuYuePage(),
+            // ));
+          }),
         ),
       ],
     ),
   );
 }
 
-void handleCallBlackBlock(BuildContext context){
- Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => lwYuYuePage(),
-                ));
+void handleCallBlackBlock(BuildContext context) {
+  Navigator.of(context).push(MaterialPageRoute(
+    builder: (context) => lwYuYuePage(),
+  ));
 }
+
 /// 文字在下图片在上组件
 Widget lwIconTopTextBottomWidget(
     BuildContext context, String text, String iconName,
@@ -216,58 +220,65 @@ Widget lwIconTopTextBottomWidget(
     Function callBlackBlock}) {
   return Container(
     child: GestureDetector(
-    onTap: callBlackBlock,
-    child: Container(
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: iconW,
-            height: iconH,
-            // padding: EdgeInsets.fromLTRB(2, 10, 2, 5),
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
-            // color: Colors.grey,
-            child: Center(
-              child: Image.asset(iconName),
-            ),
-          ),
-          Container(
-            // padding: EdgeInsets.fromLTRB(2, 0, 2, 5),
-            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-            child: Center(
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: fontsize,
-                  color: textcolor,
-                ),
+      onTap: callBlackBlock,
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: iconW,
+              height: iconH,
+              // padding: EdgeInsets.fromLTRB(2, 10, 2, 5),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+              // color: Colors.grey,
+              child: Center(
+                child: Image.asset(iconName),
               ),
             ),
-          )
-        ],
+            Container(
+              // padding: EdgeInsets.fromLTRB(2, 0, 2, 5),
+              margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+              child: Center(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: fontsize,
+                    color: textcolor,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     ),
-  ),
   );
 }
 
 Widget lwTextLeftIconRightWidget(
     BuildContext context, String text, String iconName, Function callBack,
-    {iconW = 15.0, iconH = 15.0}) {
+    {iconW = 15.0, iconH = 15.0,double fontsize = 15,double angle = 0.5,}) {
   return GestureDetector(
     onTap: callBack,
     child: Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(2, 0, 0, 0),
-            child: Text(text),
+            child: Text(text,style: TextStyle(fontSize: fontsize),),
           ),
           Container(
-            width: iconW,
-            height: iconH,
             padding: EdgeInsets.fromLTRB(5, 0, 2, 0),
-            child: Image.asset(iconName),
+            child: Transform.rotate(
+              angle: math.pi / angle,
+              child: Container(
+                width: iconW,
+                height: iconH,
+                child: Image.asset(iconName),
+              )
+            )
+            
           )
         ],
       ),
@@ -304,25 +315,28 @@ Widget lwDescTitle(String text,
   );
 }
 
-Widget homeLeadingBtn(BuildContext context,String text,{Function callBlackBlock}){
+Widget homeLeadingBtn(BuildContext context, String text,
+    {Function callBlackBlock}) {
   return GestureDetector(
     child: Container(
-
-    margin: EdgeInsets.fromLTRB(10, 20, 0, 5),
-    padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-    color: Colors.red,
-    child: Container(
-      height: 150,
-      width: 100,
-      child: Center(
-        child: Text(text,style: TextStyle(color: Colors.black,)),
+      margin: EdgeInsets.fromLTRB(10, 20, 0, 5),
+      padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+      color: Colors.red,
+      child: Container(
+        height: 150,
+        width: 100,
+        child: Center(
+          child: Text(text,
+              style: TextStyle(
+                color: Colors.black,
+              )),
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+        ),
       ),
-      decoration: BoxDecoration(
-      border: Border.all(color: Colors.black,width: 1),
-      borderRadius: BorderRadius.all(Radius.circular(4)),
     ),
-    ),
-  ),
-  onTap:callBlackBlock,
+    onTap: callBlackBlock,
   );
 }

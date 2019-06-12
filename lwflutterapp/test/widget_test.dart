@@ -19,6 +19,17 @@ void main() {
     // Build our app and trigger a frame.
     // await tester.pumpWidget(d2());
 
+  String nowtime = DateTime.now().toString();
+  List datelist = nowtime.split(' ');
+  List yearmothday = datelist[0].toString().split('-');
+  List hms = datelist[1].toString().split(':');
+yearmothday.forEach((v){
+  print('yearmothday-----------$v');
+});
+hms.forEach((v){
+  print('hms-----------${int.parse(v)}');
+});
+  print(nowtime);
 
     // String url = 'http://192.168.1.222/v2/clientAPP/app/banner_promotion';
     // Map <String,dynamic> param = {'equipment':'2'};
@@ -34,13 +45,11 @@ void main() {
     // prints(response);
     
 
-  List<String> mylist = ['z','b','f','e','a'];
-  mylist.sort((s1,s2){
-    return s1.compareTo(s2);
-  });
-  print('==============${mylist.toString()}');
-
-
+  // List<String> mylist = ['z','b','f','e','a'];
+  // mylist.sort((s1,s2){
+  //   return s1.compareTo(s2);
+  // });
+  // print('==============${mylist.toString()}');
   });
 }
 

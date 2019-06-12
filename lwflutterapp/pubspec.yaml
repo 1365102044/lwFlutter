@@ -39,7 +39,8 @@ dependencies:
   azlistview: ^0.1.2
   # 获取拼音
   lpinyin: ^1.0.7
-
+  # 日期选择器
+  flutter_datetime_picker: ^1.2.1
   
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHousePage.dart';
 
 Widget houseColumsItemWidget(BuildContext context, String picurl, String title,
     String desc, String price) {
@@ -25,6 +27,7 @@ Widget houseColumsItemWidget(BuildContext context, String picurl, String title,
                 child: Container(
                   alignment: Alignment.topLeft,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -35,7 +38,7 @@ Widget houseColumsItemWidget(BuildContext context, String picurl, String title,
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                        padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
                         alignment: Alignment.topLeft,
                         child: lwTextRightIconLeftWidget(
                             context, desc, 'assets/house/location_icon.jpg'),
@@ -80,14 +83,15 @@ Widget lwTextRightIconLeftWidget(
         width: iconW,
       ),
       Container(
-        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Text(
-          text,
+          text ?? '',
           style: TextStyle(
             fontSize: fontsize,
             color: textcolor,
           ),
           maxLines: maxlines,
+          overflow: TextOverflow.clip,
         ),
       ),
     ],
@@ -100,8 +104,8 @@ Widget houseTopWidget(BuildContext context, String quyuText, String timeText,
     double angle2 = 0.5,
     Color timeTextColor = Colors.grey,
     GlobalKey anchorKey,
+    double clearBtnWidth = 0,
     Function callBlackBlock(int)}) {
-      
   return Container(
     color: Colors.white,
     height: 40,
@@ -109,21 +113,21 @@ Widget houseTopWidget(BuildContext context, String quyuText, String timeText,
       children: <Widget>[
         Expanded(
           child: Container(
-            key:anchorKey,
+            key: anchorKey,
             child: lwTextLeftIconRightWidget(
               context,
               quyuText,
               'assets/house/arrowbottom.png',
               () {
-              callBlackBlock(1);
-            },
-              iconH: 25.0,
-              iconW: 25.0,
-              fontsize: 18,
+                callBlackBlock(1);
+              },
+              iconH: 22.0,
+              iconW: 22.0,
+              fontsize: 16,
               angle: angle1,
             ),
           ),
-          flex: 2,
+          flex: 3,
         ),
         Expanded(
           child: Container(
@@ -131,27 +135,55 @@ Widget houseTopWidget(BuildContext context, String quyuText, String timeText,
             child: lwTextLeftIconRightWidget(
                 context, '价格', 'assets/house/arrowbottom.png', () {
               callBlackBlock(2);
-            }, iconH: 25.0, iconW: 25.0, fontsize: 18.0, angle: angle2),
+            }, iconH: 22.0, iconW: 22.0, fontsize: 16.0, angle: angle2),
           ),
-          flex: 2,
+          flex: 3,
         ),
         Expanded(
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               callBlackBlock(3);
             },
             child: Container(
               alignment: Alignment.center,
-              child: Text(timeText,
-                  style: TextStyle(
-                    color: timeTextColor,
-                  )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(timeText ?? '',
+                          style: TextStyle(
+                            color: timeTextColor,
+                          )),
+                    ),
+                  ),
+                  Builder(
+                    builder: (context) {
+                      return Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                        width: clearBtnWidth,
+                        height: 20,
+                        child: lwFillButton('清空', () {
+                          print(')))))))');
+                          lwHouseTopNotification('msg').dispatch(context);
+                        },
+                            borderWidth: 1,
+                            borderColor: Colors.grey,
+                            backColor: Colors.white,
+                            textcolor: Colors.grey,
+                            radius: 4),
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
-          flex: 3,
+          flex: 4,
         ),
       ],
     ),
   );
 }
-

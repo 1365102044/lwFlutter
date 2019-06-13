@@ -9,8 +9,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/event/LwHouseEvent.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/lwHouseDeatilPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/model/LwHouseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/model/LwRegionModel.dart';
@@ -35,6 +37,7 @@ class _LwHousePageState extends State<LwHousePage>
   String _timeText = '选择入住时间';
   String _quyuName = '全部区域';
   GlobalKey _anchorKey1 = GlobalKey();
+  double _clearBtnWidth = 0.0;
 
   /// 区域模型数组
   List<RegionModel> _regionList = [];
@@ -44,7 +47,7 @@ class _LwHousePageState extends State<LwHousePage>
 
   /// 区域id
   String _quyuId = '';
-  String _cityid = 'd94bba14-dec1-11e5-bcc3-00163e1c066c';
+  String _cityid ;
   // String _preStayTime = '';
   List<dynamic> _houseListModelList = [];
   Map<String, dynamic> _para = {
@@ -57,15 +60,26 @@ class _LwHousePageState extends State<LwHousePage>
   @override
   void initState() {
     super.initState();
+    
+    /// 注册监听 首页切换城市后的操作
+    lwEventBus.on<LwHouseEvent>().listen((LwHouseEvent event){
+      print('+++++++++++++++++++event:${event.cityid}');
+      setState(() {
+        _para['cityId'] = _cityid = event.cityid;
+        _para['quyuId'] = '';
+        _quyuName = '全部区域';
+      });
+      _getHouseListData();
+      _getQuYuListInforByCityData();
+    });
+    
     if (widget.homePageDataModels != null &&
         widget.homePageDataModels.length != 0) {
       setState(() {
         _houseListModelList.addAll(widget.homePageDataModels);
       });
     } else {
-      _para['cityId'] = _cityid;
-      _getHouseListData();
-      _getQuYuListInforByCityData();
+      _getCiytId();
     }
   }
 
@@ -110,15 +124,18 @@ class _LwHousePageState extends State<LwHousePage>
         print('+++++++++++popmenu回调+++$newValue+++++++');
         setState(() {
           _angle1 = 0.5;
-          _quyuName = newValue;
-          int index = datas.indexOf(newValue);
-          if(index == 0){
-            _para['quyuId'] = '';  
-          }else{
-            RegionModel model = _regionList[index-1];
-            _para['quyuId'] = model.id;
+
+          if (newValue != null) {
+            _quyuName = newValue;
+            int index = datas.indexOf(newValue);
+            if (index == 0) {
+              _para['quyuId'] = '';
+            } else {
+              RegionModel model = _regionList[index - 1];
+              _para['quyuId'] = model.id;
+            }
+            _getHouseListData();
           }
-          _getHouseListData();
         });
       });
     } else if (index == 2) {
@@ -132,6 +149,8 @@ class _LwHousePageState extends State<LwHousePage>
         setState(() {
           _timeText = date;
           _para['preStayTime'] = _timeText;
+          _timeTextColor = Colors.black;
+          _clearBtnWidth = 50.0;
           _getHouseListData();
         });
       });
@@ -147,13 +166,27 @@ class _LwHousePageState extends State<LwHousePage>
         color: Color(0xfff5f5f5),
         child: Column(
           children: <Widget>[
-            Container(
-              child: houseTopWidget(context, _quyuName, _timeText,
-                  angle1: _angle1,
-                  angle2: _angle2,
-                  anchorKey: _anchorKey1, callBlackBlock: (index) {
-                handleCallBlock(context, index);
-              }),
+            NotificationListener<lwHouseTopNotification>(
+              onNotification: (notofi) {
+                print('+++++++++++++notifi:${notofi.msg}');
+                setState(() {
+                  _para['preStayTime'] = '';
+                  _timeText = '选择入住时间';
+                  _timeTextColor = Colors.grey;
+                  _clearBtnWidth = 0.0;
+                  _getHouseListData();
+                });
+              },
+              child: Container(
+                child: houseTopWidget(context, _quyuName, _timeText,
+                    angle1: _angle1,
+                    angle2: _angle2,
+                    anchorKey: _anchorKey1,
+                    timeTextColor: _timeTextColor,
+                    clearBtnWidth: _clearBtnWidth, callBlackBlock: (index) {
+                  handleCallBlock(context, index);
+                }),
+              ),
             ),
             Expanded(
               child: Container(
@@ -225,4 +258,22 @@ class _LwHousePageState extends State<LwHousePage>
       }
     });
   }
+
+  void _getCiytId() async {
+    String cityid = await lwLocalDataUtils.getCurrentCityId();
+    print('-----------------cityid:$cityid');
+    setState(() {
+      _para['cityId'] = _cityid = cityid;
+      _getHouseListData();
+      _getQuYuListInforByCityData();
+    });
+  }
+}
+
+/// 通知 只能子widget 向父 widget 通信，注意点：发送通知书，
+/// context一定要是被监听的子widget的context，
+/// 可以使用Build(build:(context){})来获取
+class lwHouseTopNotification extends Notification {
+  final String msg;
+  lwHouseTopNotification(this.msg);
 }

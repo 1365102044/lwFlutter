@@ -266,7 +266,7 @@ Widget lwTextLeftIconRightWidget(
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(2, 0, 0, 0),
-            child: Text(text,style: TextStyle(fontSize: fontsize),),
+            child: Text(text ?? '',style: TextStyle(fontSize: fontsize),),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(5, 0, 2, 0),

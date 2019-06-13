@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwCityListModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/LwAppBarForHomePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/LwHomeSwiperWidget.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/event/LwHouseEvent.dart';
 import 'package:lwflutterapp/lwhooray/other/api.dart';
 import 'package:lwflutterapp/lwhooray/tool/networkUtils.dart';
 import 'dart:convert';
@@ -26,19 +29,30 @@ class _LwHomePageState extends State<LwHomePage>
   List<RoomTypeListModel> _roomList = [];
   List<ItemListModel> _itemlist = [];
   String _localCity ;
+  String _cityId;
   // 1. 创建 globalKey
   GlobalKey<lwAppBarForHomePageState> globalKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _localCity = '北京';
+    _getCurrentCityId();
+  }
+
+  void _getCurrentCityId() async{
+  String cityname = await lwLocalDataUtils.getCurrentCityName();
+  String cityid = await lwLocalDataUtils.getCurrentCityId();
+    setState(() {
+      _localCity = cityname;
+      _cityId = cityid;
+      globalKey.currentState.changeLeftText(_localCity);
+    });
     /// banner 图
     _getBannerList();
+    /// 推荐
     _getTuiJianList();
+    /// 城市列表
     _getCityInforList();
-
-   
   }
 
   void _getCityInforList() async {
@@ -52,7 +66,7 @@ class _LwHomePageState extends State<LwHomePage>
 
   void _getTuiJianList() async {
     LwNetworkUtils.requestDataWithPost(LWAPI.HOME_TUIJIAN_URL, {
-      'cityId': 'd94bba14-dec1-11e5-bcc3-00163e1c066c'
+      'cityId': _cityId
     }, (Response response) {
       LwResponse lwresponse = LwResponse.fromJson(jsonDecode(response.data));
       setState(() {
@@ -101,17 +115,22 @@ class _LwHomePageState extends State<LwHomePage>
       appBar: lwAppBarForHomePage(
         '首页',
         key: globalKey,
-        leftText: _localCity,
+        leftText: _localCity ?? '',
         callBlackBlock: () {
           Navigator.of(context)
               .push(MaterialPageRoute(
-                  builder: (context) => LwCityPage(_cityInfors)))
+                  builder: (context) => LwCityPage(_cityInfors,_localCity)))
               .then((cityModel) {
+                /// 发送
+              print(lwEventBus);
+              lwEventBus.fire(LwHouseEvent(cityModel.id));
             setState(() {
               _localCity = cityModel.name;
+              _cityId = cityModel.id;
               globalKey.currentState.changeLeftText(cityModel.name);
-              print('++++++++++++++++++++++++++_localCity:$_localCity');
             });
+            lwLocalDataUtils.saveCurrentCityInfor(cityModel.id, cityModel.name);
+            _refresh();
           });
         },
       ),

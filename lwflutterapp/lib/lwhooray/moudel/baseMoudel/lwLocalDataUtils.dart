@@ -15,8 +15,12 @@ final String ACCOUNT_INFOR_USERID_LOCAL_DATA_KEY = 'ACCOUNT_INFOR_USERID_LOCAL_D
 final String ACCOUNT_INFOR_PASSWORD_LOCAL_DATA_KEY = 'ACCOUNT_INFOR_PASSWORD_LOCAL_DATA_KEY';
 /// nickname
 final String ACCOUNT_INFOR_NICKNAME_LOCAL_DATA_KEY = 'ACCOUNT_INFOR_NICKNAME_LOCAL_DATA_KEY';
+/// 用户切换到的城市id
+final String ACCOUNT_CURRENT_CITY_ID_KEY = 'ACCOUNT_LOCAL_CITY_ID_KEY';
+/// 用户切换到的城市 名字
+final String ACCOUNT_CURRENT_CITY_NAME_KEY = 'ACCOUNT_LOCAL_CITY_NAME_KEY';
 
-
+/// 保存本地数据
 class lwLocalDataUtils {
   
   /// 保存登录后的账户信息
@@ -30,6 +34,7 @@ class lwLocalDataUtils {
 
   ///  保存数据 String,double,bool,int,List
   static saveData(String key, dynamic data) async {
+    if(key == null || data == null) return;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (data.runtimeType == String) {
       sharedPreferences.setString(key, data as String);
@@ -74,4 +79,34 @@ class lwLocalDataUtils {
         // return false;
       }
   }
+
+  /// 保存城市信息
+  static saveCurrentCityInfor(String cityid,String cityname){
+    lwLocalDataUtils.saveData(ACCOUNT_CURRENT_CITY_ID_KEY, cityid);
+    lwLocalDataUtils.saveData(ACCOUNT_CURRENT_CITY_NAME_KEY, cityname);
+  }
+  /// 获取当前城市id
+static Future<String> getCurrentCityId() async{
+  String cityid = '';
+   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    cityid =  sharedPreferences.getString(ACCOUNT_CURRENT_CITY_ID_KEY);
+    if (cityid == '') {
+      cityid = '';
+    } 
+  return cityid;
+}
+
+/// 获取当前城市名
+static Future<String> getCurrentCityName() async{
+  String cityname = '';
+   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    cityname =  sharedPreferences.getString(ACCOUNT_CURRENT_CITY_NAME_KEY);
+    print('++++++cityname+++++++befare$cityname');
+    if (cityname == '') {
+      cityname = '北京';
+    } 
+    print('++++++cityname++++++after+$cityname');
+  return cityname;
+}
+
 }

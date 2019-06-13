@@ -118,6 +118,7 @@ class lwUtils {
 /// 图片加载 （磁盘缓存）
 Image lwImageWithNetWork(String url, {BoxFit customfit = BoxFit.cover}) {
   return Image(
+    // color: Colors.grey,
     image: network.NetworkImage(url),
     fit: customfit,
   );

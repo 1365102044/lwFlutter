@@ -7,17 +7,20 @@ import 'model/LwCityListModel.dart';
 import 'package:lpinyin/lpinyin.dart';
 
 class LwCityPage extends StatefulWidget {
+  String currentCityName ;
   List<CityList> cityList = [];
-  LwCityPage(this.cityList);
+  LwCityPage(this.cityList,this.currentCityName);
   @override
   _LwCityPageState createState() => _LwCityPageState();
 }
 
 class _LwCityPageState extends State<LwCityPage> {
   List<CityList> _cityInfors = [];
+  String _currentCityName ;
   @override
   void initState() {
     super.initState();
+    _currentCityName = widget.currentCityName;
     List<String> temPinyins = [];
     Map<String, List<CityList>> temMap = {};
     if (widget.cityList != null && widget.cityList.length != 0) {
@@ -37,7 +40,7 @@ class _LwCityPageState extends State<LwCityPage> {
     /// 排序
     temPinyins.sort((s1, s2) => s1.compareTo(s2));
     setState(() {
-      _cityInfors.insert(0, CityList(name: '当前城市：北京', type: 1));
+      _cityInfors.insert(0, CityList(name: '当前城市：'+_currentCityName, type: 1));
       temPinyins.forEach((key) {
         _cityInfors.add(CityList(name: key, type: 1));
         _cityInfors.addAll(temMap[key]);

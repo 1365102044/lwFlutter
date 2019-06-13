@@ -170,9 +170,7 @@ Widget tabsItemsWidget(BuildContext context, String iconName, String itemName) {
 }
 
 Widget cellArrowWidget(String leftText,
-    {String rightText,
-    bool isHaveRightIcon,
-    Function callBackBlock}) {
+    {String rightText, bool isHaveRightIcon, Function callBackBlock}) {
   return GestureDetector(
     child: Container(
       color: Colors.white,
@@ -217,43 +215,47 @@ Widget cellArrowWidget(String leftText,
   );
 }
 
-
-  lwShowAlertList(BuildContext context,String title,List<String> datas,{Function callBlackBlock(int index)}){
-  showDialog(context: context,
-  builder: (BuildContext context){
-    return AlertDialog(
-      title: Center(child: Text(title),),
-      content: Container(
-        width: MediaQuery.of(context).size.width*0.8,
-        height: MediaQuery.of(context).size.height*0.4,
-        child: ListView.builder(
-          itemCount: datas.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context,int index){
-            return Container(
-              child: GestureDetector(
-                child: Column(
-                children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    alignment: Alignment.centerLeft,
-                    child: Text(datas[index]),
-                    height: 30,
+lwShowAlertList(BuildContext context, String title, List<String> datas,
+    {Function callBlackBlock(int index)}) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(title),
+          ),
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.4,
+            child: ListView.builder(
+              itemCount: datas.length,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                    child: GestureDetector(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        color: Colors.white,
+                        alignment: Alignment.centerLeft,
+                        child: Text(datas[index]),
+                        height: 30,
+                      ),
+                      Divider(),
+                    ],
                   ),
-                  Divider(),
-                ],
-              ),
-                onTap:(){
-                  callBlackBlock(index);
-                  Navigator.of(context).pop();
-                },
-              )
-              
-              );
-          },
-        ),
-      ),
-    );
-  }
-  );
+                  onTap: () {
+                    callBlackBlock(index);
+                    Navigator.of(context).pop();
+                  },
+                ));
+              },
+            ),
+          ),
+        );
+      });
 }
+
+// Widget lwImageWidget(){
+
+// }

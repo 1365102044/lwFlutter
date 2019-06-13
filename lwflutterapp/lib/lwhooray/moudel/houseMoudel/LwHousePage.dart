@@ -223,7 +223,7 @@ class _LwHousePageState extends State<LwHousePage>
                         onTap: () {
                           print('------------customid:$customid');
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => lwHouseDeatilPage(customid),
+                            builder: (context) => LwHouseDeatilPage(customid),
                           ));
                         },
                       );

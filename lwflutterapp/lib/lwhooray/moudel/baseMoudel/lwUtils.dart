@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:path/path.dart';
@@ -85,41 +86,46 @@ class lwUtils {
   }
 
   /// popmenu 下拉菜单(x 位置不容易控制)
-  static lwpopMenuWidget(BuildContext context,List datas, double left, double top,{Function callBlackBlock}) {
+  static lwpopMenuWidget(
+      BuildContext context, List datas, double left, double top,
+      {Function callBlackBlock}) {
     showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(-500, top+10, 200, 100),
+      position: RelativeRect.fromLTRB(-500, top + 10, 200, 100),
       items: popItem(datas),
-    ).then((newValue){
-      if(callBlackBlock != null){
+    ).then((newValue) {
+      if (callBlackBlock != null) {
         callBlackBlock(newValue);
       }
     });
   }
 
- static List<PopupMenuItem<String>> popItem(List datas){
-  List<PopupMenuItem<String>> list = [];
-  datas.forEach((v){
-    list.add(PopupMenuItem<String>(
-          height: 40,
-          child: Container(
-            alignment: Alignment.center,
-            child: Text(v),
-          ),
-          value: v,
-        ));
-  });
-  return list;
+  static List<PopupMenuItem<String>> popItem(List datas) {
+    List<PopupMenuItem<String>> list = [];
+    datas.forEach((v) {
+      list.add(PopupMenuItem<String>(
+        height: 40,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(v),
+        ),
+        value: v,
+      ));
+    });
+    return list;
+  }
 }
-}
-
-
 
 /// 图片加载 （磁盘缓存）
-Image lwImageWithNetWork(String url, {BoxFit customfit = BoxFit.cover}) {
-  return Image(
-    // color: Colors.grey,
-    image: network.NetworkImage(url),
+Widget lwImageWithNetWork(String url, {BoxFit customfit = BoxFit.cover}) {
+  // return Image(
+  //   // color: Colors.grey,
+  //   image: network.NetworkImage(url),
+  //   fit: customfit,
+  // );
+  return FadeInImage.assetNetwork(
+    placeholder: 'assets/placeholder/750*400.png',
+    image: url,
     fit: customfit,
   );
 }
@@ -176,3 +182,20 @@ class lwUtilsFrame {
     return _renderBox.size.width + _widgetFrame.dx;
   }
 }
+
+// enum lwImageAssetsType{
+//   LWImageAssetsType_HOSE,
+//   LWImageAssetsType_HOME,
+//   LWImageAssetsType_ME,
+// }
+// class lwImageAssets{
+//   lwImageAssetsType type;
+//   lwImageAssets(this.type);
+//   String _getAssetsPath(){
+//     return
+//   }
+
+//   String getAssetsBasePath(){
+
+//   }
+// }

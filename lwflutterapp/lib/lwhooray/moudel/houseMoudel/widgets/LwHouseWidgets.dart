@@ -14,10 +14,7 @@ Widget houseColumsItemWidget(BuildContext context, String picurl, String title,
         Container(
           width: MediaQuery.of(context).size.width,
           height: 150.0,
-          child: Image.network(
-            picurl,
-            fit: BoxFit.fitWidth,
-          ),
+          child: lwImageWithNetWork(picurl,customfit:BoxFit.fitWidth),
         ),
         Container(
           height: 60.0,

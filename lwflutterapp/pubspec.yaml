@@ -109,6 +109,6 @@ flutter:
     - assets/me/func_icon/
     - assets/tabbar/
     - assets/launchimage/
-
+    - assets/placeholder/
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

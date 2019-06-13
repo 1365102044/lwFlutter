@@ -8,6 +8,8 @@ import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingListPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/lwHouseDeatilPage.dart';
 import 'dart:math' as math;
 
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/lwHuXingDeatilPage.dart';
+
 Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
   String topdesc = '只生活，不漂泊，你值得一寓';
   String toptitle = '好寓精选';
@@ -51,14 +53,17 @@ Widget HomeColumsItemWidget(BuildContext context, List<dynamic> modelList) {
                   modelList[index].roomTypePic.big,
                   modelList[index].itemName,
                   modelList[index].roomTypeName, callBackBlock: () {
-                print('+++++++++++++++=${model[index].id}');
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      lwHuXingDeatilPage(modelList[index].roomTypeId),
+                ));
               });
             } else if (model.runtimeType == ItemListModel) {
               return HomeRowItemWidget(context, modelList[index].itemPic.big,
                   modelList[index].itemName, '', callBackBlock: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
-                      lwHouseDeatilPage(modelList[index].itemId),
+                      LwHouseDeatilPage(modelList[index].itemId),
                 ));
               });
             } else {
@@ -245,6 +250,8 @@ Widget lwIconTopTextBottomWidget(
                     fontSize: fontsize,
                     color: textcolor,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             )
@@ -256,8 +263,15 @@ Widget lwIconTopTextBottomWidget(
 }
 
 Widget lwTextLeftIconRightWidget(
-    BuildContext context, String text, String iconName, Function callBack,
-    {iconW = 15.0, iconH = 15.0,double fontsize = 15,double angle = 0.5,}) {
+  BuildContext context,
+  String text,
+  String iconName,
+  Function callBack, {
+  iconW = 15.0,
+  iconH = 15.0,
+  double fontsize = 15,
+  double angle = 0.5,
+}) {
   return GestureDetector(
     onTap: callBack,
     child: Container(
@@ -266,20 +280,20 @@ Widget lwTextLeftIconRightWidget(
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(2, 0, 0, 0),
-            child: Text(text ?? '',style: TextStyle(fontSize: fontsize),),
+            child: Text(
+              text ?? '',
+              style: TextStyle(fontSize: fontsize),
+            ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(5, 0, 2, 0),
-            child: Transform.rotate(
-              angle: math.pi / angle,
-              child: Container(
-                width: iconW,
-                height: iconH,
-                child: Image.asset(iconName),
-              )
-            )
-            
-          )
+              padding: EdgeInsets.fromLTRB(5, 0, 2, 0),
+              child: Transform.rotate(
+                  angle: math.pi / angle,
+                  child: Container(
+                    width: iconW,
+                    height: iconH,
+                    child: Image.asset(iconName),
+                  )))
         ],
       ),
     ),
@@ -294,6 +308,7 @@ Widget lwTitle(String text,
     style: TextStyle(
       color: textcolor,
       fontSize: fontsize,
+      fontWeight: FontWeight.w400,
     ),
     maxLines: 1,
     overflow: TextOverflow.ellipsis,

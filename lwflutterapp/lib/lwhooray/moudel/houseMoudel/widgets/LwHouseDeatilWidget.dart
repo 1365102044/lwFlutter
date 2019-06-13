@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/LwHomeSwiperWidget.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingDeatilPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingListPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/model/LwHouseDeatilModel.dart';
 
@@ -72,14 +74,23 @@ Widget aboutUsWidget(
   );
 }
 
-Widget basicsInforWidget(BuildContext context, List<SheshiArr> shesilist) {
+Widget basicsInforWidget(BuildContext context, List<Map<String,String>>datas) {
   return Container(
     padding: EdgeInsets.all(5),
     child: Card(
       child: Column(
         children: <Widget>[
           houseInforTitleWidget('基础设施'),
-          Container(
+          JiuGongGeForIconTextWidget(context, datas),
+        ],
+      ),
+    ),
+  );
+}
+
+/// 九宫格，图片路径：文字
+Widget JiuGongGeForIconTextWidget(BuildContext context,List<Map<String,String>>datas){
+return Container(
             child: GridView(
               physics: NeverScrollableScrollPhysics(),//禁止滚动
               shrinkWrap: true,// 解决嵌套问题的冲突
@@ -90,22 +101,18 @@ Widget basicsInforWidget(BuildContext context, List<SheshiArr> shesilist) {
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
               ),
-              children: List.generate(shesilist.length, (index) {
+              children: List.generate(datas.length, (index) {
                 return Container(
                   child: lwIconTopTextBottomWidget(
                       context,
-                      shesilist[index].name,
-                      'assets/house/sheshi/' + shesilist[index].name + '.png',
+                      datas[index].values.first,
+                      datas[index].keys.first,
                       iconH: 25,
                       iconW: 25),
                 );
               }),
             ),
-          )
-        ],
-      ),
-    ),
-  );
+          );
 }
 
 Widget moreHuxingWidget(BuildContext context,List<RoomTypeArr> huxingItems){
@@ -131,7 +138,6 @@ Widget moreHuxingWidget(BuildContext context,List<RoomTypeArr> huxingItems){
                   child: Text('更多'),
                 ),
                 onTap: (){
-                  print('------------点击了项目详情中的户型-更多-');
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => LwHuXingListPage(huxingItems),
                     ));
@@ -148,6 +154,9 @@ Widget moreHuxingWidget(BuildContext context,List<RoomTypeArr> huxingItems){
           itemBuilder: (BuildContext context,int index){
             return HomeRowItemWidget(context, huxingItems[index].picObj.big, huxingItems[index].roomTypeName, '',callBackBlock: (){
               print('-----------点击了项目详情中的 户型 items');
+              Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => lwHuXingDeatilPage(huxingItems[index].id),));
+              
             });
           },  
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHuXingDeatilPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/widgets/LwHuXingListWidget.dart';
 
 import 'model/LwHouseDeatilModel.dart';
@@ -34,39 +35,50 @@ class _LwHuXingListPageState extends State<LwHuXingListPage> {
         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
         color: Color(0xfff5f5f5),
         child: ListView.separated(
-        itemCount: (_huxingItems == null) ? 0 : _huxingItems.length,
-        itemBuilder: (BuildContext context, int index) {
-          if (_huxingItems[index].runtimeType == RoomTypeListModel) {
-            return huxingListItemWidget(
-                _huxingItems[index].roomTypePic.big,
-                _huxingItems[index].itemName,
-                _huxingItems[index].roomTypeName,
-                _huxingItems[index].roomTypeArea,
-                _huxingItems[index].iosRoomTypeLowestprice);
-          }else if(_huxingItems[index].runtimeType == RoomTypeArr){
-            return huxingListItemWidget(
-                _huxingItems[index].picObj.big,
-                _huxingItems[index].roomTypeName,
-                _huxingItems[index].zhuangXiu.key,
-                _huxingItems[index].minMianji,
-                _huxingItems[index].minZujin.toString());
-          }
-          else{
-            print('------------户型列表没有数据');
+          itemCount: (_huxingItems == null) ? 0 : _huxingItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            if (_huxingItems[index].runtimeType == RoomTypeListModel) {
+              return huxingListItemWidget(
+                  _huxingItems[index].roomTypePic.big,
+                  _huxingItems[index].itemName,
+                  _huxingItems[index].roomTypeName,
+                  _huxingItems[index].roomTypeArea,
+                  _huxingItems[index].iosRoomTypeLowestprice,
+                  callBackBlock: (){
+                    _pushToHuXingDeatilPage(context,_huxingItems[index].roomTypeId);
+            });
+            } else if (_huxingItems[index].runtimeType == RoomTypeArr) {
+              return huxingListItemWidget(
+                  _huxingItems[index].picObj.big,
+                  _huxingItems[index].roomTypeName,
+                  _huxingItems[index].zhuangXiu.key,
+                  _huxingItems[index].minMianji,
+                  _huxingItems[index].minZujin.toString(),
+                  callBackBlock: (){
+                    _pushToHuXingDeatilPage(context,_huxingItems[index].id);
+            });
+            } else {
+              print('------------户型列表没有数据');
+              return Container(
+                color: Colors.red,
+                height: 1,
+              );
+            }
+          },
+          separatorBuilder: (BuildContext context, int index) {
             return Container(
-              color:Colors.red,
-              height: 1,
+              color: Color(0xfff5f5f5),
+              height: 10.0,
             );
-          }
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Container(
-            color: Color(0xfff5f5f5),
-            height: 10.0,
-          );
-        },
-      ),
+          },
+        ),
       ),
     );
+  }
+
+  _pushToHuXingDeatilPage(BuildContext context, String roomid) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => lwHuXingDeatilPage(roomid),
+    ));
   }
 }

@@ -4,8 +4,13 @@ import 'package:flutter/rendering.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
 
 Widget huxingListItemWidget(
-    String picurl, String title, String hx, double mj, String price,
-    {Function callBackBlock}) {
+  String picurl,
+  String title,
+  String hx,
+  double mj,
+  String price, {
+  Function callBackBlock,
+}) {
   return GestureDetector(
     child: Container(
       color: Colors.white,
@@ -43,14 +48,14 @@ Widget huxingListItemWidget(
 Widget huxingInforWidget(String title, String hx, double mj) {
   return Container(
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,// 列或行的居左 右
+      crossAxisAlignment: CrossAxisAlignment.start, // 列或行的居左 右
       children: <Widget>[
         Container(
           child: lwTitle(title == null ? '' : title),
           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
         ),
         Container(
-          child: lwDescTitle(hx,textcolor: Colors.black),
+          child: lwDescTitle(hx, textcolor: Colors.black),
           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
           // alignment: Alignment.centerLeft,
         ),

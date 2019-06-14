@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:path/path.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/tool/network_image.dart' as network;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
+import 'package:amap_base_map/amap_base_map.dart';
+// import 'package:amap_base_location/amap_base_location.dart';
 class lwUtils {
   /// 弹框提示----------
   static showAlertDialog(BuildContext context, String title, String msg,
@@ -140,12 +139,10 @@ class lwUtilsFrame {
     _renderBox = anchorKey.currentContext.findRenderObject();
     _widgetFrame = _renderBox.localToGlobal(Offset.zero);
     var offset = _renderBox.localToGlobal(Offset(0.0, _renderBox.size.height));
-    print('==============lwUtilsFrame');
     print(_renderBox);
     print(_renderBox.size);
     print(_widgetFrame);
     print(offset);
-    print('==============lwUtilsFrame');
     return this;
   }
 
@@ -181,6 +178,113 @@ class lwUtilsFrame {
   double getMaxX() {
     return _renderBox.size.width + _widgetFrame.dx;
   }
+}
+
+/// 第三方账号注册
+class lwThridRegisterUtil {
+  static register() async {
+    /// 这个方法在Android端无效
+    await AMap.init('b81ef01f84500f54167c0a240ba89d5d');
+    // lwMapLocation.startLocation();
+  }
+}
+
+class lwMapUtil {
+
+  static startLocation() async {
+  //  final options =  LocationClientOptions(
+  //     isOnceLocation: true,
+  //     locatingWithReGeocode: true,
+  //   );
+  //   if (await Permissions.requestMapPermission()) {
+  //     AMapLocation().getLocation(options).then((Location value) {
+  //       print('****************value:$value********');
+  //     }).then((e) {});
+  //   } else {
+  //     print('****************权限不足********');
+  //   }
+  }
+
+  /// 地图
+  AMapController _controller;
+  StreamSubscription _subscription;
+  MyLocationStyle _myLocationStyle = MyLocationStyle();
+  Widget showMapView(BuildContext context,{double lat = 39.8994731,double lng = 116.4142794,bool compassEnabled = false}) {
+    return Container(
+      child: AMapView(
+        onAMapViewCreated: (controller) {
+          _controller = controller;
+          print('**lw***********_subscription*************');
+          print(_subscription);
+          print(_controller);
+          print('*************_subscription***********lw**');
+          _subscription = _controller.mapClickedEvent
+              .listen((it) => print('地图点击: 坐标: $it'));
+              _updateMyLocationStyle(context,locationDotFillColor: Colors.red);
+        },
+        amapOptions: AMapOptions(
+          compassEnabled: compassEnabled,
+          zoomControlsEnabled: true,
+          logoPosition: LOGO_POSITION_BOTTOM_CENTER,
+          camera: CameraPosition(
+            target: LatLng(lat,lng),
+            zoom: 10,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _updateMyLocationStyle(
+    BuildContext context, {
+    String myLocationIcon,
+    double anchorU,
+    double anchorV,
+    Color radiusFillColor,
+    Color strokeColor,
+    double strokeWidth,
+    int myLocationType,
+    int interval,
+    bool showMyLocation,
+    bool showsAccuracyRing,
+    bool showsHeadingIndicator,
+    Color locationDotBgColor,
+    Color locationDotFillColor,
+    bool enablePulseAnnimation,
+    String image,
+  }) async {
+    if (await Permissions.requestMapPermission()) {
+      _myLocationStyle = _myLocationStyle.copyWith(
+        myLocationIcon: myLocationIcon,
+        anchorU: anchorU,
+        anchorV: anchorV,
+        radiusFillColor: radiusFillColor,
+        strokeColor: strokeColor,
+        strokeWidth: strokeWidth,
+        myLocationType: myLocationType,
+        interval: interval,
+        showMyLocation: showMyLocation,
+        showsAccuracyRing: showsAccuracyRing,
+        showsHeadingIndicator: showsHeadingIndicator,
+        locationDotBgColor: locationDotBgColor,
+        locationDotFillColor: locationDotFillColor,
+        enablePulseAnimation: enablePulseAnnimation,
+      );
+      print('**lw***********_myLocationStyle*************');
+      print(_myLocationStyle);
+      print('*************_myLocationStyle***********lw**');
+      _controller.setMyLocationStyle(_myLocationStyle);
+    } else {
+      // showError(context, '权限不足');
+    }
+  }
+
+  // @override
+  // void dispose() {
+  //   _controller?.dispose();
+  //   _subscription?.cancel();
+  //   super.dispose();
+  // }
 }
 
 // enum lwImageAssetsType{

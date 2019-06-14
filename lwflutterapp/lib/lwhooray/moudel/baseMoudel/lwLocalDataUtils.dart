@@ -90,7 +90,7 @@ static Future<String> getCurrentCityId() async{
   String cityid = '';
    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     cityid =  sharedPreferences.getString(ACCOUNT_CURRENT_CITY_ID_KEY);
-    if (cityid == '') {
+    if (cityid == null || cityid == '') {
       cityid = '';
     } 
   return cityid;
@@ -102,7 +102,7 @@ static Future<String> getCurrentCityName() async{
    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     cityname =  sharedPreferences.getString(ACCOUNT_CURRENT_CITY_NAME_KEY);
     print('++++++cityname+++++++befare$cityname');
-    if (cityname == '') {
+    if (cityname == null || cityname == '') {
       cityname = '北京';
     } 
     print('++++++cityname++++++after+$cityname');

@@ -55,6 +55,15 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6EAA0CF22B38B8C000FEF87 /* libamap_base_location.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libamap_base_location.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0D122B38B8C000FEF87 /* libamap_base_map.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libamap_base_map.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0D322B38BD3000FEF87 /* libamap_base.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libamap_base.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0D522B38BD3000FEF87 /* libflutter_webview_plugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libflutter_webview_plugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0D722B38BD3000FEF87 /* libMJExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMJExtension.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0D922B38BD3000FEF87 /* libpath_provider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpath_provider.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0DB22B38BD3000FEF87 /* libpermission_handler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libpermission_handler.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0DD22B38BD3000FEF87 /* libshared_preferences.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libshared_preferences.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6EAA0DF22B38BD3000FEF87 /* liburl_launcher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = liburl_launcher.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +146,15 @@
 		E2D9902ED63F45E641BDAA36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6EAA0D322B38BD3000FEF87 /* libamap_base.a */,
+				F6EAA0D522B38BD3000FEF87 /* libflutter_webview_plugin.a */,
+				F6EAA0D722B38BD3000FEF87 /* libMJExtension.a */,
+				F6EAA0D922B38BD3000FEF87 /* libpath_provider.a */,
+				F6EAA0DB22B38BD3000FEF87 /* libpermission_handler.a */,
+				F6EAA0DD22B38BD3000FEF87 /* libshared_preferences.a */,
+				F6EAA0DF22B38BD3000FEF87 /* liburl_launcher.a */,
+				F6EAA0CF22B38B8C000FEF87 /* libamap_base_location.a */,
+				F6EAA0D122B38B8C000FEF87 /* libamap_base_map.a */,
 				666E7CC35CCACC62E197E80B /* libPods-Runner.a */,
 			);
 			name = Frameworks;
@@ -157,6 +175,7 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				75EBC0F82FC8C30470756138 /* [CP] Embed Pods Frameworks */,
+				B8F3ECB064084E1FC9D51E2F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -261,6 +280,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+		};
+		B8F3ECB064084E1FC9D51E2F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh",
+				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		BEEE1EF6917C9B11F6FB6037 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -375,6 +412,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -503,6 +541,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -529,6 +568,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -36,6 +36,7 @@ class _LwHomePageState extends State<LwHomePage>
   @override
   void initState() {
     super.initState();
+    lwThridRegisterUtil.register();
     _getCurrentCityId();
   }
 
@@ -46,24 +47,25 @@ class _LwHomePageState extends State<LwHomePage>
       _localCity = cityname;
       _cityId = cityid;
       globalKey.currentState.changeLeftText(_localCity);
+      print('**lw***********cityname*************');
+      print(cityname);
+      print('*************cityname***********lw**');
     });
-    /// banner 图
     _getBannerList();
-    /// 推荐
-    _getTuiJianList();
-    /// 城市列表
+    _getTuiJianList();  
     _getCityInforList();
   }
-
+  /// 城市列表
   void _getCityInforList() async {
     LwNetworkUtils.requestDataWithPost(LWAPI.HOME_CITY_DATA_LIST_URL, {},
         (Response response) {
       LwCityListModel cityResponseModel =
           LwCityListModel.fromJson(jsonDecode(response.data));
+          _cityInfors.clear();
       _cityInfors.addAll(cityResponseModel.result.list);
     }, (ErrorModel error) {});
   }
-
+  /// 推荐
   void _getTuiJianList() async {
     LwNetworkUtils.requestDataWithPost(LWAPI.HOME_TUIJIAN_URL, {
       'cityId': _cityId
@@ -176,6 +178,9 @@ class _LwHomePageState extends State<LwHomePage>
     return completer.future.then((_) {
       _getBannerList();
       _getTuiJianList();
+      _getCityInforList();
+      lwMapUtil.startLocation();
+      _getCurrentCityId();
     });
   }
 }

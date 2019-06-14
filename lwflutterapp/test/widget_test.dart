@@ -19,17 +19,11 @@ void main() {
     // Build our app and trigger a frame.
     // await tester.pumpWidget(d2());
 
-  String nowtime = DateTime.now().toString();
-  List datelist = nowtime.split(' ');
-  List yearmothday = datelist[0].toString().split('-');
-  List hms = datelist[1].toString().split(':');
-yearmothday.forEach((v){
-  print('yearmothday-----------$v');
-});
-hms.forEach((v){
-  print('hms-----------${int.parse(v)}');
-});
-  print(nowtime);
+  double a = 2.11;
+  int b = a.toInt();
+  int c = a ~/ 1 ;
+  print(b);
+  print(c);
 
     // String url = 'http://192.168.1.222/v2/clientAPP/app/banner_promotion';
     // Map <String,dynamic> param = {'equipment':'2'};

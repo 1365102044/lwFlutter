@@ -24,12 +24,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   english_words: ^3.1.0
-  
+  #轮播图
   flutter_swiper: ^1.1.4
   json_annotation: ^2.0.0
+  #网络请求
   dio: ^2.0.0
   flutter_spinkit: ^3.1.0
-  flutter_webview_plugin: ^0.3.0+2
+  flutter_webview_plugin: ^0.3.5
+  webview_flutter: ^0.3.9+1
   # 添加sharedPreference依赖
   shared_preferences: ^0.5.0
   url_launcher: ^3.0.3
@@ -43,6 +45,12 @@ dependencies:
   flutter_datetime_picker: ^1.2.1
   #组件间的通信
   event_bus: ^1.0.1
+  #地图
+  # amap_base: ^0.3.5
+  amap_base_map: ^0.4.4+1
+  # amap_base_location: ^0.4.0+1
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

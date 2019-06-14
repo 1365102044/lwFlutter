@@ -29,13 +29,13 @@ class lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
     super.initState();
     
     setState(() {
-      _title = widget.title;
-      _leftText = widget.leftText;
+      _title = widget.title ?? '';
+      _leftText = widget.leftText ?? '';
       _callBlackBlock = widget.callBlackBlock;
     });
   }
    void changeLeftText(String str){
-    _leftText = str;
+    _leftText = str ?? '';
   }
 
   @override
@@ -52,7 +52,7 @@ class lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
                 height: 31,
                 width: 70,
                 child: Center(
-                  child: Text(_leftText,
+                  child: Text(_leftText ?? '',
                       style: TextStyle(
                         color: Colors.black,
                       ),
@@ -74,7 +74,7 @@ class lwAppBarForHomePageState extends State<lwAppBarForHomePage> {
               padding:(MediaQuery.of(context).padding.top != 44.0) ?EdgeInsets.fromLTRB(0, 30, 90, 0) : EdgeInsets.fromLTRB(0, 40, 90, 0),
               child: Container(
                 child: Text(
-                  _title,
+                  _title ?? '',
                   style: TextStyle(fontSize: 20,
                   fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,

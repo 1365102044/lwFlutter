@@ -28,6 +28,8 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
 	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -48,5 +50,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>告诉我您的位置，可以更准确的找到附近房源~</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>好寓需要您的同意,才能访问位置,以便于搜索您周边的房源信息</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>告诉我您的位置，可以更准确的找到附近房源~</string>
 </dict>
 </plist>

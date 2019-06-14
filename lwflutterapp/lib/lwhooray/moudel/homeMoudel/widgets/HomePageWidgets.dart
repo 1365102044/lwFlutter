@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/LwMapFindHousePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/lwYuYuePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHousePage.dart';
@@ -152,12 +153,6 @@ Widget HomeItemTopWidget(
 
 /// 首页中的功能条
 Widget HomeFuncItemsWidget(BuildContext context, {Function callBlackBlock}) {
-  // Map<String, String> dataMap = {};
-  // List<Widget> rowWidgets = [];
-  // dataMap.forEach((k, v) {
-  //   rowWidgets.add(lwIconTopTextBottomWidget(context, k, v));
-  // });
-
   return Container(
     color: Colors.white,
     child: Row(
@@ -165,13 +160,15 @@ Widget HomeFuncItemsWidget(BuildContext context, {Function callBlackBlock}) {
         Expanded(
           child: lwIconTopTextBottomWidget(
               context, '地图找房', 'assets/home/dituzhaofang.png',
-              callBlackBlock: callBlackBlock('地图找房')),
+              callBlackBlock: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => LwMapFindHousePage(),));
+              }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
               context, '预约看房', 'assets/home/yuyuekanfang.png',
               callBlackBlock: () {
-            print('-----------点击了预约看房:$context-----------');
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => lwYuYuePage(),
             ));
@@ -182,16 +179,13 @@ Widget HomeFuncItemsWidget(BuildContext context, {Function callBlackBlock}) {
               context, '预定房源', 'assets/home/yudingfangyuan.png',
               callBlackBlock: () {
             print('-----------点击了预定房源-----------');
-            // Navigator.of(context).push(MaterialPageRoute(
-            //   builder: (context) => lwYuYuePage(),
-            // ));
           }),
         ),
         Expanded(
           child: lwIconTopTextBottomWidget(
               context, '签约房源', 'assets/home/zaixianqianyue.png',
               callBlackBlock: () {
-            print('-----------点击了签约房源${context}-----------');
+            print('-----------点击了签约房源-----------');
           }),
         ),
         Expanded(
@@ -199,9 +193,6 @@ Widget HomeFuncItemsWidget(BuildContext context, {Function callBlackBlock}) {
               context, '购物商城', 'assets/home/jingdongshangcheng.png',
               callBlackBlock: () {
             print('-----------点击了购物商城-----------');
-            // Navigator.of(context).push(MaterialPageRoute(
-            //   builder: (context) => lwYuYuePage(),
-            // ));
           }),
         ),
       ],

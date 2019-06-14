@@ -83,7 +83,9 @@ class _LwHouseDeatilPageState extends State<LwHouseDeatilPage> {
                         return aboutUsWidget(
                             context,
                             _houseDeatilModel.result.mendianPhone,
-                            _houseDeatilModel.result.hiItemName);
+                            _houseDeatilModel.result.hiItemName,
+                            lat: _houseDeatilModel.result.lat,
+                            lng: _houseDeatilModel.result.lng);
                       }
                       if (index == 2) {
                         return basicsInforWidget(

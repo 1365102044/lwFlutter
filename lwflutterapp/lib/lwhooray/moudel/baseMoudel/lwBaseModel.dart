@@ -116,6 +116,7 @@ Widget lwAppBar(String title, {Widget leadingWidget}) {
       color: Colors.grey,
     ),
     leading: leadingWidget,
+    brightness: Brightness.light,/// 白底黑字
     // automaticallyImplyLeading: false,
   );
 }

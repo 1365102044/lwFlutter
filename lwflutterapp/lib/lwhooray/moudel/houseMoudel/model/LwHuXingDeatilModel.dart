@@ -47,6 +47,7 @@ class Result {
   String itemPhone;
   String iosRoomTypeArea;
   double maxZujin;
+  String collectionId;
 
   Result(
       {this.roomTypeArea,
@@ -72,7 +73,8 @@ class Result {
       this.rentPrice,
       this.itemPhone,
       this.iosRoomTypeArea,
-      this.maxZujin});
+      this.maxZujin,
+      this.collectionId});
 
   Result.fromJson(Map<String, dynamic> json) {
     roomTypeArea = json['roomTypeArea'] as double;
@@ -117,6 +119,7 @@ class Result {
     itemPhone = json['itemPhone'];
     iosRoomTypeArea = json['iosRoomTypeArea'];
     maxZujin = json['maxZujin'];
+    collectionId = json['collectionId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -156,6 +159,7 @@ class Result {
     data['itemPhone'] = this.itemPhone;
     data['iosRoomTypeArea'] = this.iosRoomTypeArea;
     data['maxZujin'] = this.maxZujin;
+    data['collectionId'] = this.collectionId;
     return data;
   }
 }
@@ -344,6 +348,28 @@ class Status {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['msg'] = this.msg;
     data['code'] = this.code;
+    return data;
+  }
+}
+
+class lwAddCollectResponse{
+ String result;
+  Status status;
+
+  lwAddCollectResponse({this.result, this.status});
+
+  lwAddCollectResponse.fromJson(Map<String, dynamic> json) {
+    result = json['result'];
+    status =
+        json['status'] != null ? new Status.fromJson(json['status']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['result'] = this.result;
+    if (this.status != null) {
+      data['status'] = this.status.toJson();
+    }
     return data;
   }
 }

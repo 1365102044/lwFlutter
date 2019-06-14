@@ -1,6 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 
 class lwProgressDialog extends StatelessWidget {
   //子布局
@@ -26,7 +26,7 @@ class lwProgressDialog extends StatelessWidget {
       @required this.loading,
       this.msg,
       this.progress = const CircularProgressIndicator(),
-      this.alpha = 0.6,
+      this.alpha = 0.3,
       this.textColor = Colors.white,
       @required this.child})
       : assert(child != null),
@@ -70,7 +70,7 @@ class lwProgressDialog extends StatelessWidget {
       }
       widgetList.add(Opacity(
         opacity: alpha,
-        child: new ModalBarrier(color: Colors.black87),
+        child: new ModalBarrier(color: LWCOLOR.LWCOLOR_BACKGROUND),
       ));
       widgetList.add(layoutProgress);
     }

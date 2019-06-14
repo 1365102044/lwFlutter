@@ -36,6 +36,11 @@ class LWAPI{
   static final String HOUSE_HUXING_LIST_INFOR_BY_ITEMID_URL = 'v2/clientAPP/app/get_roomTypeList_by_itemId';
   /// 预约房源
   static final String HOUSE_YUYUEFANGYUAN_URL = 'v2/clientAPP/app/yu_yue';
+  /// 取消收藏
+  static final String HOUSE_CANCLE_HUXING_COLLECT_URL = "/v2/clientAPP/app/cancel_houseCollection";
+  /// 添加收藏
+  static final String HOUSE_ADD_HUXING_COLLECT_URL = "v2/clientAPP/app/collector_houseType";
+
 
   /// 使用密码登录
   static final String LOGIN_POSSWORD_URL = 'v2/clientAPP/app/passWord_login';

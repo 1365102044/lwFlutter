@@ -6,7 +6,7 @@ import 'LwHouseDeatilWidget.dart';
 
 Widget huxingInforsWidget(
     BuildContext context, String title, String desc, String price,
-    {bool iscollect = false}) {
+    {bool iscollect = false,Function callBlackBlock,}) {
   return Container(
     padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
     child: Card(
@@ -47,9 +47,7 @@ Widget huxingInforsWidget(
                         ((iscollect) ? 'collect_s' : 'collect_n') +
                         '.png'),
                   ),
-                  onTap: () {
-                    print('============点击了收藏按钮');
-                  },
+                  onTap: callBlackBlock,
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 5, 10, 0),

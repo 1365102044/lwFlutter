@@ -105,7 +105,7 @@ Widget lwAppBarForHomePageWidget(BuildContext context, String title) {
   );
 }
 
-Widget lwAppBar(String title, {Widget leadingWidget}) {
+Widget lwAppBar(String title, {Widget leadingWidget,Widget bottomWidget,}) {
   return AppBar(
     title: Text(
       title,
@@ -118,6 +118,7 @@ Widget lwAppBar(String title, {Widget leadingWidget}) {
     leading: leadingWidget,
     brightness: Brightness.light,/// 白底黑字
     // automaticallyImplyLeading: false,
+    bottom: bottomWidget,
   );
 }
 
@@ -170,8 +171,9 @@ Widget tabsItemsWidget(BuildContext context, String iconName, String itemName) {
   );
 }
 
+/// cell 左边是文字，右边是文字，带箭头及点击事件回调
 Widget cellArrowWidget(String leftText,
-    {String rightText, bool isHaveRightIcon, Function callBackBlock}) {
+    {String rightText, bool isHaveRightIcon = true, Function callBackBlock}) {
   return GestureDetector(
     child: Container(
       color: Colors.white,
@@ -191,7 +193,7 @@ Widget cellArrowWidget(String leftText,
                 Expanded(
                     child: Container(
                   child: Text(
-                    rightText,
+                    rightText ?? '',
                     textAlign: TextAlign.end,
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
@@ -215,6 +217,69 @@ Widget cellArrowWidget(String leftText,
     onTap: callBackBlock,
   );
 }
+/// cell 左边是文字，右边是输入框
+Widget cellTFWidget(String leftText,
+    {String rightText,
+    String rightPlaceHodler,
+    bool isHaveRightIcon = false,
+    String textfiledKey,
+    Map<String, String> paraMap,
+    bool enabled = true,
+    TextEditingController controller,
+    Function callBackBlock}) {
+  return GestureDetector(
+    child: Container(
+      color: Colors.white,
+      height: 50,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Text(
+                    leftText,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    style: TextStyle(color: Colors.black),
+                    controller: controller,
+                    textAlign: TextAlign.right,
+                    decoration: InputDecoration(
+                      counterText: rightText,
+                      hintText: rightPlaceHodler,
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    ),
+                    onChanged: (text) {
+                      paraMap[textfiledKey] = text;
+                    },
+                    enabled: enabled,
+                  ),
+                ),
+                Container(
+                  width: isHaveRightIcon ? 22 : 0,
+                  height: isHaveRightIcon ? 22 : 0,
+                  child: Image.asset('assets/home/arrow_right.png'),
+                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            height: 0.5,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    ),
+    onTap: callBackBlock,
+  );
+}
+
 
 lwShowAlertList(BuildContext context, String title, List<String> datas,
     {Function callBlackBlock(int index)}) {

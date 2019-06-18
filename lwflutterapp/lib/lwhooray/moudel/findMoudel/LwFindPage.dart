@@ -6,6 +6,7 @@ import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
 import 'package:lwflutterapp/lwhooray/widgets/CustomWebView.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LwFindPage extends StatefulWidget {
   @override
@@ -13,64 +14,60 @@ class LwFindPage extends StatefulWidget {
 }
 
 class _LwFindPageState extends State<LwFindPage> {
-  TextEditingController controller = TextEditingController();
-  FlutterWebviewPlugin flutterWebviewPlugin = FlutterWebviewPlugin();
-  var urlString = "https://www.appblog.cn";
+  String _url = 'http://pms.hntpsjwy.com/wechatApps/weixin/homeCenter/find.html';
+  String url1 = 'http://www.baidu.com';
+  WebViewController _webviewVC;
+  bool _canBackBool = false;
   @override
-  void initState() {
-    super.initState();
-    //监听页面状态改变
-    flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged wvs) {
-      print(wvs.type);
-    });
-    //监听页面滚动事件
-    flutterWebviewPlugin.onScrollYChanged.listen((double offsetY) {
-      print('offsetY: $offsetY');
-    });
-    flutterWebviewPlugin.onScrollXChanged.listen((double offsetX) {
-      print('offsetX: $offsetX');
-    });
-  }
-
-  launchUrl() {
-    setState(() {
-      urlString = controller.text;
-      flutterWebviewPlugin.reloadUrl(urlString);
-    });
-  }
-
   Widget build(BuildContext context) {
-//    return WebviewScaffold(
-//        appBar: new AppBar(
-//          title: new Text('WebView Demo'),
-//        ),
-//        url: 'http://www.appblog.cn',
-//    );
-    return WebviewScaffold(
-      appBar: AppBar(
-        title: TextField(
-          autofocus: false,
-          controller: controller,
-          textInputAction: TextInputAction.go,
-          onSubmitted: (url) => launchUrl(),
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: "Enter Url Here",
-            hintStyle: TextStyle(color: Colors.white),
+    return Scaffold(
+      appBar: lwAppBar('发现',leadingWidget: getBackWidget()),
+      body: Container(
+        child: WillPopScope(
+          onWillPop: () async{
+            bool res = await _webviewVC.canGoBack();
+            setState(() {
+              _canBackBool = res;
+            });
+            if(res){
+              _webviewVC.goBack();
+            }
+            res = !res;
+            return Future.value(res);
+          },
+          child: WebView(
+            onWebViewCreated: (WebViewController vc){
+              _webviewVC = vc;
+              _webviewVC.loadUrl(url1);
+            },
+            onPageFinished: (ur){
+              setState(() {
+              _canBackBool = !(ur == url1);
+              print('+++++++++++++=$ur');
+              print(_canBackBool);
+            });
+            },
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.navigate_next),
-            onPressed: () => launchUrl(),
-          )
-        ],
       ),
-      url: urlString,
-      withZoom: false,
     );
+  }
+
+  Widget getBackWidget(){
+  return Container(
+    // print('**lw***********_canBackBool*************');
+    // print(_canBackBool);
+    // print('*************_canBackBool***********lw**');
+    height: _canBackBool ? 30:0.0,
+    width: _canBackBool ? 30:0.0,
+
+    child: GestureDetector(
+        child: Icon(Icons.arrow_back_ios),
+        onTap: (){
+          _webviewVC.goBack();
+        },
+      ),
+  );
   }
 }
 
-// http://pms.hntpsjwy.com/wechatApps/weixin/homeCenter/find.html

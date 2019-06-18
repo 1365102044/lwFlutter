@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/LwMapFindHousePage.dart';
+import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/YuDing/LwYuDingPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/lwYuYuePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/LwHousePage.dart';
@@ -178,7 +179,9 @@ Widget HomeFuncItemsWidget(BuildContext context, {Function callBlackBlock}) {
           child: lwIconTopTextBottomWidget(
               context, '预定房源', 'assets/home/yudingfangyuan.png',
               callBlackBlock: () {
-            print('-----------点击了预定房源-----------');
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => LwYuDingPage(),));
+            
           }),
         ),
         Expanded(

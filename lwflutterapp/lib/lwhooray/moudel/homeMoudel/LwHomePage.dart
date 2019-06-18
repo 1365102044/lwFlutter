@@ -124,7 +124,6 @@ class _LwHomePageState extends State<LwHomePage>
                   builder: (context) => LwCityPage(_cityInfors,_localCity)))
               .then((cityModel) {
                 /// 发送
-              print(lwEventBus);
               lwEventBus.fire(LwHouseEvent(cityModel.id));
             setState(() {
               _localCity = cityModel.name;

@@ -1,13 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:lwflutterapp/demo/d1.dart';
 import 'package:lwflutterapp/demo/d2.dart';
 import 'package:lwflutterapp/demo/d3.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 
 import './lwhooray/moudel/hoorayapp.dart';
 
-void main() =>  runApp(Hoorayapp());
+void main() => runApp(Hoorayapp());
 
 // void main() => runApp(FirstScreen());
 
@@ -22,26 +22,60 @@ void main() =>  runApp(Hoorayapp());
 //   )
 // );
 
-
-class LwApp extends StatelessWidget{
-
-  // @override
-  // Widget build(BuildContext context){
-    // return MaterialApp(
-    //   title: 'Welcome to lwApp',
-    //   home: Scaffold(
-    //     appBar: AppBar(
-    //       title: Text('barTitle'),
-    //     ),
-    //     body: Center(
-    //       // child: Text('hello world! hai! hais'),
-    //       child: new RandromWords(),
-    //     ),
-    //   ),
-    // );
-  // }
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'list嵌套',
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text('滚动嵌套'),
+          ),
+          body: ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+                return ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: cellArrowWidget('leftText---'+index.toString()),
+                      );
+                    },
+                    separatorBuilder: (context, index) => Divider(
+                          color: Colors.red,
+                        ),
+                    itemCount: 10);
+            },
+          )),
+    );
+  }
+}
+
+class ListList extends StatelessWidget {
+  int length = 0; //列表长度
+  Color color; //文字颜色
+
+  ListList(this.length, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) => Text(
+              'item. $index',
+              style: TextStyle(color: color),
+            ),
+        separatorBuilder: (context, index) => Divider(
+              color: color,
+            ),
+        itemCount: length);
+  }
+}
+
+class LwApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Satartup Name Generator',
       theme: new ThemeData(
@@ -52,74 +86,69 @@ class LwApp extends StatelessWidget{
   }
 }
 
-
-class RandromWords extends StatefulWidget{
-
+class RandromWords extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return RandromWordsState();
   }
 }
 
-class RandromWordsState extends State<RandromWords>{
-
-final _sugestions = <WordPair>[];
-final _biggerFont = const TextStyle(fontSize: 18);
+class RandromWordsState extends State<RandromWords> {
+  final _sugestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18);
 // 收藏数据
-final _saved = new Set<WordPair>();
+  final _saved = new Set<WordPair>();
 
-Widget _buildSuggestion(){
-  return new ListView.builder(
-
-    padding: const EdgeInsets.all(16),
-    // 对于每个建议的单词对都会调用一次itemBuilder，然后将单词对添加到ListTile行中
+  Widget _buildSuggestion() {
+    return new ListView.builder(
+      padding: const EdgeInsets.all(16),
+      // 对于每个建议的单词对都会调用一次itemBuilder，然后将单词对添加到ListTile行中
       // 在偶数行，该函数会为单词对添加一个ListTile row.
       // 在奇数行，该函数会添加一个分割线widget，来分隔相邻的词对。
       // 注意，在小屏幕上，分割线看起来可能比较吃力。
-    itemBuilder: (context,i){
-      // 在每一列之前，添加一个1像素高的分隔线widget
-      if (i.isOdd) return Divider();
-         // 语法 "i ~/ 2" 表示i除以2，但返回值是整形（向下取整），比如i为：1, 2, 3, 4, 5
+      itemBuilder: (context, i) {
+        // 在每一列之前，添加一个1像素高的分隔线widget
+        if (i.isOdd) return Divider();
+        // 语法 "i ~/ 2" 表示i除以2，但返回值是整形（向下取整），比如i为：1, 2, 3, 4, 5
         // 时，结果为0, 1, 1, 2, 2， 这可以计算出ListView中减去分隔线后的实际单词对数量
-      final index = i ~/2;
+        final index = i ~/ 2;
         // 如果是建议列表中最后一个单词对
-      if (index >= _sugestions.length){
-        // ...接着再生成10个单词对，然后添加到建议列表
-        _sugestions.addAll(generateWordPairs().take(10));
-      }
-    return _buildRow(_sugestions[index]);
-    },
-  ); 
-}
+        if (index >= _sugestions.length) {
+          // ...接着再生成10个单词对，然后添加到建议列表
+          _sugestions.addAll(generateWordPairs().take(10));
+        }
+        return _buildRow(_sugestions[index]);
+      },
+    );
+  }
 
 // 显示row 视图
-Widget _buildRow(WordPair pair){
-  //是否已经收藏
-  final aleardSaved = _saved.contains(pair);
+  Widget _buildRow(WordPair pair) {
+    //是否已经收藏
+    final aleardSaved = _saved.contains(pair);
 
-  return ListTile(
-    title: Text(
-      pair.asPascalCase,
-      style: _biggerFont,
-    ),
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+      trailing: new Icon(
+        aleardSaved ? Icons.favorite : Icons.favorite_border,
+        color: aleardSaved ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (aleardSaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
+    );
+  }
 
-    trailing: new Icon(
-      aleardSaved ? Icons.favorite : Icons.favorite_border,
-      color: aleardSaved ? Colors.red : null,
-    ),
-    onTap: (){
-      setState(() {
-        if(aleardSaved){
-          _saved.remove(pair);
-        }else{
-          _saved.add(pair);
-        }
-      });
-    },
-  );
-}
-
-@override
+  @override
   Widget build(BuildContext context) {
     // final wordpair = WordPair.random();
     // return Text(wordpair.asPascalCase);
@@ -128,39 +157,38 @@ Widget _buildRow(WordPair pair){
         title: Text('Startup Name Generator'),
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.list), onPressed: _pushSave),
-          ],
+        ],
       ),
       body: _buildSuggestion(),
     );
   }
 
 // 跳转到收藏页面
-  void _pushSave(){
-   Navigator.of(context).push(
+  void _pushSave() {
+    Navigator.of(context).push(
       new MaterialPageRoute(
-        builder: (context){
-          final tils = _saved.map(
-            (pair) {
-              return new ListTile(
-                title: new Text(
-                 pair.asPascalCase,
-                 style: _biggerFont, 
-                ),
-              );
-            }
-          );
-          final divided = ListTile.divideTiles(context: context,tiles: tils).toList();
+        builder: (context) {
+          final tils = _saved.map((pair) {
+            return new ListTile(
+              title: new Text(
+                pair.asPascalCase,
+                style: _biggerFont,
+              ),
+            );
+          });
+          final divided =
+              ListTile.divideTiles(context: context, tiles: tils).toList();
 
           return new Scaffold(
             appBar: new AppBar(
               title: new Text('Saved Suggestions'),
             ),
-            body: new ListView(children: divided,),
+            body: new ListView(
+              children: divided,
+            ),
           );
         },
-      ),  
-   );
+      ),
+    );
   }
 }
-
-

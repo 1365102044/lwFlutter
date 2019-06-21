@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
@@ -20,31 +22,54 @@ class _LwZuYueInforPageState extends State<LwZuYueInforPage>
   Function _callBackBlock;
   LwRoomInforModel _roomInforModel;
   Map<String, String> _paramMap = {};
-  String _ruzhusj;
-  String _qianyuesj;
+  bool _isAgreeBool = false;
+  List<TextEditingController> _controllers = [
+    TextEditingController(),
+    TextEditingController()
+  ];
+  List<TextEditingController> _personControllers = [
+    TextEditingController(),
+    TextEditingController(),
+  ];
   @override
   void initState() {
     super.initState();
     _callBackBlock = widget.callBackBlock;
     _roomInforModel = widget.roomInforModel;
+
+    setState(() {
+      _paramMap['houseItemName'] = _roomInforModel.result.houseItemName;
+      _paramMap['loudong'] = _roomInforModel.result.louNo +
+          '栋' +
+          _roomInforModel.result.fangNo +
+          '号';
+      _paramMap['rent'] = _roomInforModel.result.iosRent;
+      Map feeMap = _roomInforModel.result.fee.first;
+      feeMap.forEach((k, v) {
+        if (k == '电费') {
+          _paramMap['dianfei'] = v;
+        } else if (k == '水费') {
+          _paramMap['shuifei'] = v;
+        } else if (k == '押金') {
+          _paramMap['yajin'] = v;
+        }
+      });
+    });
   }
 
   /// 选择日期
   _chooseDate(
     int index,
   ) {
-    lwUtils.lwShowDetePicker(context, onChanged: (date) {
-      print('-------------onchanged:$date');
-    }, onConfirm: (date) {
+    lwUtils.lwShowDetePicker(context, onConfirm: (date) {
       print('------------------onConfirm:$date');
       setState(() {
         if (index == 1) {
           _paramMap['endtime'] = date;
-          _ruzhusj = date;
         } else {
           _paramMap['signTime'] = date;
-          _qianyuesj = date;
         }
+        _controllers[index - 1].text = date;
       });
     });
   }
@@ -68,22 +93,23 @@ class _LwZuYueInforPageState extends State<LwZuYueInforPage>
                     if (index == 0) {
                       return zuyueInforTopWidget(
                           context,
-                          _roomInforModel.result.houseItemName,
-                          _roomInforModel.result.louNo +
-                              '栋' +
-                              _roomInforModel.result.fangNo +
-                              '号',
-                          _roomInforModel.result.iosRent+'元/月',
-                          _ruzhusj,
-                          _qianyuesj, callBack: (index) {
+                          _paramMap['houseItemName'],
+                          _paramMap['loudong'],
+                          _paramMap['rent'] + '元/月',
+                          controllers: _controllers, callBack: (index) {
                         _chooseDate(
                           index,
                         );
                       });
                     } else if (index == 1) {
-                      return zuyueInforPersonWidger(context, _paramMap);
+                      return zuyueInforPersonWidger(context,
+                          para: _paramMap, controllers: _personControllers);
                     } else {
-                      return xiyiwidget(context);
+                      return xiyiwidget(context, _isAgreeBool, () {
+                        setState(() {
+                          _isAgreeBool = !_isAgreeBool;
+                        });
+                      });
                     }
                   },
                 ),
@@ -92,15 +118,36 @@ class _LwZuYueInforPageState extends State<LwZuYueInforPage>
             Container(
               child: getBottomBtnWidget(context, ['上一步', '下一步'],
                   callBackBlock: (text) {
-                _callBackBlock((text == '下一步') ? 2 : 1, _paramMap);
-                print('**lw**33*********_paramMap*************');
-                print(_paramMap);
-                print('*************_paramMap***********lw**');
+                if (text == '下一步' && !checkParamLegal()) {
+                  return;
+                }
+                FocusScope.of(context).requestFocus(FocusNode());
+                _callBackBlock((text == '下一步') ? 2 : 0, _paramMap);
               }),
             )
           ],
         ),
       ),
     );
+  }
+
+  bool checkParamLegal() {
+    String msg;
+    if (lwUtils.lw_isEmpty(_paramMap['endtime'])) {
+      msg = '请选选择入住日期';
+    } else if (lwUtils.lw_isEmpty(_paramMap['signTime'])) {
+      msg = '请选择预计签约时间';
+    } else if (lwUtils.lw_isEmpty(_paramMap['zukeName'])) {
+      msg = '请输入姓名';
+    } else if (lwUtils.lw_isEmpty(_paramMap['zukePhone'])) {
+      msg = '请输入手机号';
+    } else if (!_isAgreeBool) {
+      msg = '请同意协议';
+    }
+    if (lwUtils.lw_isEmpty(msg)){
+      return true;
+    }
+    lwUtils.showAlertDialog(context, '提示', msg);
+    return false;
   }
 }

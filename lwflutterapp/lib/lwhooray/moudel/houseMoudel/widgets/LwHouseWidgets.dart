@@ -163,7 +163,6 @@ Widget houseTopWidget(BuildContext context, String quyuText, String timeText,
                         width: clearBtnWidth,
                         height: 20,
                         child: lwFillButton('清空', () {
-                          print(')))))))');
                           lwHouseTopNotification('msg').dispatch(context);
                         },
                             borderWidth: 1,

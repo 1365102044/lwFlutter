@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
-import 'baseMoudel/lwLocalDataUtils.dart';
-import 'find.dart';
 import 'findMoudel/LwFindPage.dart';
-import 'home.dart';
 import 'homeMoudel/LwHomePage.dart';
-import './house.dart';
 import 'houseMoudel/LwHousePage.dart';
-import 'loginMoudel/LwLogin.dart';
-import 'me.dart';
 import 'meMoudel/LwMePage.dart';
 
 class Hoorayapp extends StatefulWidget {
@@ -68,6 +62,7 @@ class HoorayAppSatate extends State<Hoorayapp>
       home: Scaffold(
         body: new TabBarView(
           controller: controller,
+          physics: NeverScrollableScrollPhysics(),
           children: [
             new LwHomePage(),
             new LwHousePage(null),

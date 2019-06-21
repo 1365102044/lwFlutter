@@ -40,6 +40,8 @@ class LWAPI{
   static final String HOUSE_GET_ROOM_INFOR_BY_HOUSEID_URL = "v2/clientAPP/app/get_house_details";
   /// 预约房源
   static final String HOUSE_YUYUEFANGYUAN_URL = 'v2/clientAPP/app/yu_yue';
+  /// 预定房源
+  static final String HOUSE_YUDINGFANGYUAN_URL = 'v2/clientAPP/app/book_house';
   /// 取消收藏
   static final String HOUSE_CANCLE_HUXING_COLLECT_URL = "/v2/clientAPP/app/cancel_houseCollection";
   /// 添加收藏

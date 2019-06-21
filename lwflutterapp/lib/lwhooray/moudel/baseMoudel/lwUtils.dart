@@ -4,11 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/tool/network_image.dart' as network;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:amap_base_map/amap_base_map.dart';
+
 // import 'package:amap_base_location/amap_base_location.dart';
 class lwUtils {
+  /// 判断 是否是空（String,Map,List）
+  static bool lw_isEmpty(dynamic text) {
+    if (text == null) {
+      return true;
+    } else if (text.runtimeType == String &&
+        ((text as String).isEmpty || (text as String).length == 0)) {
+      return true;
+    } else if (text.runtimeType == Map && (text as Map).keys.length == 0) {
+      return true;
+    } else if (text.runtimeType == List && (text as List).length == 0) {
+      return true;
+    }
+    return false;
+  }
+
   /// 弹框提示----------
   static showAlertDialog(BuildContext context, String title, String msg,
-      {Function callblack, bool barrierDismissible}) {
+      {Function callblack, bool barrierDismissible,String btnText}) {
     showDialog(
         // 设置点击 dialog 外部不取消 dialog，默认能够取消
         barrierDismissible: true,
@@ -36,7 +52,7 @@ class lwUtils {
                     // color: Colors.red,
                     alignment: Alignment.center,
                     child: Text(
-                      '知道了',
+                     btnText ?? '知道了',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -190,26 +206,28 @@ class lwThridRegisterUtil {
 }
 
 class lwMapUtil {
-
   static startLocation() async {
-  //  final options =  LocationClientOptions(
-  //     isOnceLocation: true,
-  //     locatingWithReGeocode: true,
-  //   );
-  //   if (await Permissions.requestMapPermission()) {
-  //     AMapLocation().getLocation(options).then((Location value) {
-  //       print('****************value:$value********');
-  //     }).then((e) {});
-  //   } else {
-  //     print('****************权限不足********');
-  //   }
+    //  final options =  LocationClientOptions(
+    //     isOnceLocation: true,
+    //     locatingWithReGeocode: true,
+    //   );
+    //   if (await Permissions.requestMapPermission()) {
+    //     AMapLocation().getLocation(options).then((Location value) {
+    //       print('****************value:$value********');
+    //     }).then((e) {});
+    //   } else {
+    //     print('****************权限不足********');
+    //   }
   }
 
   /// 地图
   AMapController _controller;
   StreamSubscription _subscription;
   MyLocationStyle _myLocationStyle = MyLocationStyle();
-  Widget showMapView(BuildContext context,{double lat = 39.8994731,double lng = 116.4142794,bool compassEnabled = false}) {
+  Widget showMapView(BuildContext context,
+      {double lat = 39.8994731,
+      double lng = 116.4142794,
+      bool compassEnabled = false}) {
     return Container(
       child: AMapView(
         onAMapViewCreated: (controller) {
@@ -220,14 +238,14 @@ class lwMapUtil {
           print('*************_subscription***********lw**');
           _subscription = _controller.mapClickedEvent
               .listen((it) => print('地图点击: 坐标: $it'));
-              _updateMyLocationStyle(context,locationDotFillColor: Colors.red);
+          _updateMyLocationStyle(context, locationDotFillColor: Colors.red);
         },
         amapOptions: AMapOptions(
           compassEnabled: compassEnabled,
           zoomControlsEnabled: true,
           logoPosition: LOGO_POSITION_BOTTOM_CENTER,
           camera: CameraPosition(
-            target: LatLng(lat,lng),
+            target: LatLng(lat, lng),
             zoom: 10,
           ),
         ),

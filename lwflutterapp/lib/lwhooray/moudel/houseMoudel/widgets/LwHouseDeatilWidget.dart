@@ -166,7 +166,6 @@ Widget moreHuxingWidget(BuildContext context, List<RoomTypeArr> huxingItems) {
                       huxingItems[index].picObj.big,
                       huxingItems[index].roomTypeName,
                       '', callBackBlock: () {
-                    print('-----------点击了项目详情中的 户型 items');
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
                           lwHuXingDeatilPage(huxingItems[index].id),

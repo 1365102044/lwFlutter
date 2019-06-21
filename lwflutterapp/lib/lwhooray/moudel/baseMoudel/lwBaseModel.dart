@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lwflutterapp/lwhooray/moudel/find.dart';
-import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/HomePageWidgets.dart';
-import 'package:lwflutterapp/main.dart';
+
 
 class LWCOLOR {
   /// 背景色
@@ -105,7 +103,11 @@ Widget lwAppBarForHomePageWidget(BuildContext context, String title) {
   );
 }
 
-Widget lwAppBar(String title, {Widget leadingWidget,Widget bottomWidget,}) {
+Widget lwAppBar(
+  String title, {
+  Widget leadingWidget,
+  Widget bottomWidget,
+}) {
   return AppBar(
     title: Text(
       title,
@@ -116,7 +118,9 @@ Widget lwAppBar(String title, {Widget leadingWidget,Widget bottomWidget,}) {
       color: Colors.grey,
     ),
     leading: leadingWidget,
-    brightness: Brightness.light,/// 白底黑字
+    brightness: Brightness.light,
+
+    /// 白底黑字
     // automaticallyImplyLeading: false,
     bottom: bottomWidget,
   );
@@ -199,70 +203,8 @@ Widget cellArrowWidget(String leftText,
                   ),
                 )),
                 Container(
-                  width: isHaveRightIcon ? 22 : 0,
-                  height: isHaveRightIcon ? 22 : 0,
-                  child: Image.asset('assets/home/arrow_right.png'),
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            height: 0.5,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-    ),
-    onTap: callBackBlock,
-  );
-}
-/// cell 左边是文字，右边是输入框
-Widget cellTFWidget(String leftText,
-    {String rightText,
-    String rightPlaceHodler,
-    bool isHaveRightIcon = false,
-    String textfiledKey,
-    Map<String, String> paraMap,
-    bool enabled = true,
-    TextEditingController controller,
-    Function callBackBlock}) {
-  return GestureDetector(
-    child: Container(
-      color: Colors.white,
-      height: 50,
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text(
-                    leftText,
-                    style: TextStyle(color: Colors.black, fontSize: 15),
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    style: TextStyle(color: Colors.black),
-                    controller: controller,
-                    textAlign: TextAlign.right,
-                    decoration: InputDecoration(
-                      counterText: rightText,
-                      hintText: rightPlaceHodler,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    ),
-                    onChanged: (text) {
-                      paraMap[textfiledKey] = text;
-                    },
-                    enabled: enabled,
-                  ),
-                ),
-                Container(
-                  width: isHaveRightIcon ? 22 : 0,
-                  height: isHaveRightIcon ? 22 : 0,
+                  width: isHaveRightIcon ? 10 : 0,
+                  height: isHaveRightIcon ? 13 : 0,
                   child: Image.asset('assets/home/arrow_right.png'),
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 ),
@@ -280,6 +222,78 @@ Widget cellTFWidget(String leftText,
   );
 }
 
+/// cell 左边是文字，右边是输入框
+Widget cellTFWidget(String leftText,
+    {String rightText,
+    String rightPlaceHodler,
+    bool isHaveRightIcon = false,
+    String textfiledKey,
+    Map<String, String> paraMap,
+    bool enabled = true,
+    TextEditingController controller,
+    int maxlenght = 100,
+    List<TextInputFormatter> inputFormatters,
+    double leftfontsize = 14,
+    double rightfontsize = 14,
+    TextInputType inputType = TextInputType.text,
+    Function callBackBlock}) {
+  return GestureDetector(
+    child: Container(
+      color: Colors.white,
+      height: 50,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Text(
+                    leftText,
+                    style:
+                        TextStyle(color: Colors.black, fontSize: leftfontsize),
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    style:
+                        TextStyle(color: Colors.black, fontSize: rightfontsize),
+                    controller: controller,
+                    textAlign: TextAlign.right,
+                    decoration: InputDecoration(
+                      counterText: rightText,
+                      hintText: rightPlaceHodler,
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    ),
+                    inputFormatters: inputFormatters ??
+                        [LengthLimitingTextInputFormatter(maxlenght)],
+                    keyboardType: inputType,
+                    onChanged: (text) {
+                      paraMap[textfiledKey] = text;
+                    },
+                    enabled: enabled,
+                  ),
+                ),
+                Container(
+                  width: isHaveRightIcon ? 22 : 0,
+                  height: isHaveRightIcon ? 22 : 0,
+                  child: Image.asset('assets/home/arrow_right.png'),
+                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            height: 0.5,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    ),
+    onTap: callBackBlock,
+  );
+}
 
 lwShowAlertList(BuildContext context, String title, List<String> datas,
     {Function callBlackBlock(int index)}) {

@@ -311,7 +311,7 @@ Widget lwTitle(String text,
 
 /// 副标题
 Widget lwDescTitle(String text,
-    {Color textcolor: Colors.grey, double fontsize: 14.0, int maxline: 2}) {
+    {Color textcolor: Colors.grey, double fontsize: 14.0, int maxline: 2,double height = 1}) {
   return Text(
     text,
     maxLines: maxline,
@@ -319,6 +319,7 @@ Widget lwDescTitle(String text,
     style: TextStyle(
       color: textcolor,
       fontSize: fontsize,
+      height: height,
     ),
     textAlign: TextAlign.left,
   );

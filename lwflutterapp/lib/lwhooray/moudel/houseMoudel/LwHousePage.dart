@@ -121,7 +121,6 @@ class _LwHousePageState extends State<LwHousePage>
       double maxx = lwUtilsFrame().init(_anchorKey1).getMaxX();
       lwUtils.lwpopMenuWidget(context, datas, maxx, maxy,
           callBlackBlock: (newValue) {
-        print('+++++++++++popmenu回调+++$newValue+++++++');
         setState(() {
           _angle1 = 0.5;
 
@@ -168,7 +167,6 @@ class _LwHousePageState extends State<LwHousePage>
           children: <Widget>[
             NotificationListener<lwHouseTopNotification>(
               onNotification: (notofi) {
-                print('+++++++++++++notifi:${notofi.msg}');
                 setState(() {
                   _para['preStayTime'] = '';
                   _timeText = '选择入住时间';
@@ -221,7 +219,6 @@ class _LwHousePageState extends State<LwHousePage>
                         child: houseColumsItemWidget(
                             context, pic, itemName, address, price),
                         onTap: () {
-                          print('------------customid:$customid');
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => LwHouseDeatilPage(customid),
                           ));

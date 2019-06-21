@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/YuDing/LwChooseHousePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/YuDing/LwYuDingCommitInforPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/YuDing/LwZuYueInforPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/model/LwRoomInforModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/event/LwHouseEvent.dart';
+import 'package:lwflutterapp/lwhooray/tool/lwProgressDialog.dart';
 
 class LwYuDingPage extends StatefulWidget {
   @override
@@ -16,6 +18,8 @@ class _LwYuDingPageState extends State<LwYuDingPage> {
   TabController _tabvc;
   Map _paraMap = {};
   LwRoomInforModel _roomInforModel;
+  int _currentIndex = 0;
+  bool _isloading = false;
   @override
   void initState() {
     super.initState();
@@ -23,64 +27,86 @@ class _LwYuDingPageState extends State<LwYuDingPage> {
       length: _tabsText.length,
       vsync: ScrollableState(),
     );
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: lwAppBar('预定',
-          bottomWidget: TabBar(
-            controller: _tabvc,
-            labelStyle: TextStyle(fontSize: 16),
-            unselectedLabelStyle: TextStyle(fontSize: 16),
-            labelColor: Colors.red,
-            unselectedLabelColor: Colors.black,
-            indicatorColor: Colors.red,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorPadding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-            isScrollable: false,
-            tabs: _tabsText.map((v) {
-              return Text(v);
-            }).toList(),
-          )),
-      body: Container(
-        color: LWCOLOR.LWCOLOR_BACKGROUND,
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: TabBarView(
-          controller: _tabvc,
-          children: <Widget>[
-            LwYuDingChooseHousePage(
-                (int index, Map map, LwRoomInforModel roomInfor) {
-              setState(() {
-                _paraMap.addAll(map);
-                _tabvc.index = index;
-                _roomInforModel = roomInfor;
-                print(
-                    '**lw***********_paraMap11*************LwYuDingChooseHousePage');
-                print(map);
-                print(_paraMap);
-                print('*************_paraMap***********lw**');
-              });
-            }),
-            LwZuYueInforPage(
-              (int index, Map map) {
-                setState(() {
-                  // _paraMap.addAll(map);
-                  _tabvc.index = index;
-                  print(
-                      '**lw***********_paraMap11*************LwZuYueInforPage');
-                  print(map);
-                  print(_paraMap);
-                  print('*************_paraMap***********lw**');
-                });
+        appBar: lwAppBar('预定',
+            bottomWidget: TabBar(
+              controller: _tabvc,
+              labelStyle: TextStyle(fontSize: 16),
+              unselectedLabelStyle: TextStyle(fontSize: 16),
+              labelColor: Colors.red,
+              unselectedLabelColor: Colors.black,
+              indicatorColor: Colors.red,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorPadding: EdgeInsets.only(top: 10),
+              onTap: (int index) {
+                _tabvc.index = _currentIndex;
               },
-              roomInforModel: _roomInforModel,
+              tabs: _tabsText.map((v) {
+                return Text(v);
+              }).toList(),
+            )),
+        body: WillPopScope(
+          child: lwProgressDialog(
+            loading: _isloading,
+            child: Container(
+              color: LWCOLOR.LWCOLOR_BACKGROUND,
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+
+                /// 禁止滚动
+                controller: _tabvc,
+                children: <Widget>[
+                  LwYuDingChooseHousePage(
+                      (int index, Map map, LwRoomInforModel roomInfor) {
+                    setState(() {
+                      _currentIndex = 1;
+                      _paraMap.addAll(map);
+                      _tabvc.index = index;
+                      _roomInforModel = roomInfor;
+                    });
+                  }),
+                  LwZuYueInforPage(
+                    (int index, Map map) {
+                      setState(() {
+                        _paraMap.addAll(map);
+                        _tabvc.index = index;
+                        _currentIndex = 2;
+                      });
+                    },
+                    roomInforModel: _roomInforModel,
+                  ),
+                  LwYuDingCommitInforPage(_paraMap, (index) {
+                    setState(() {
+                      if (index == 1) {
+                        _tabvc.index = _currentIndex = index;
+                      } else {
+                        setState(() {
+                          _isloading = true;
+                        });
+                        Future.delayed(Duration(seconds: 3), () {
+                          setState(() {
+                            _isloading = false;
+                          });
+                          Navigator.pop(context);
+                        });
+                      }
+                    });
+                  }),
+                ],
+              ),
             ),
-            LwYuDingCommitInforPage(),
-          ],
-        ),
-      ),
-    );
+          ),
+          onWillPop: () {
+            lwUtils.showAlertDialog(context, '提示', '确定退出预定 ？', btnText: '确定',
+                callblack: () {
+              Navigator.pop(context);
+            });
+          },
+        ));
   }
 }

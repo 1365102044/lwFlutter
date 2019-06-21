@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
+import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/model/LwRoomInforModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/model/LwRoomNumberModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/model/lwHuXingInforModel.dart';
@@ -18,9 +19,11 @@ class LwHouseInforViewModel {
 
   /// 获取项目列表信息
   getProjectInfor({Function callBackBlcok}) async {
+    String cityid = await lwLocalDataUtils.getCurrentCityId();
+
     LwNetworkUtils.requestDataWithPost(
         LWAPI.HOUSE_PROJECT_LIST_INFOR_BY_CITYID_URL,
-        {'cityId': 'd94bba14-dec1-11e5-bcc3-00163e1c066c'},
+        {'cityId': cityid ?? 'd94bba14-dec1-11e5-bcc3-00163e1c066c'},
         (Response response) {
       lwProjectsInforModel res =
           lwProjectsInforModel.fromJson(jsonDecode(response.data));

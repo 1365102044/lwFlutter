@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lwflutterapp/lwhooray/moudel/find.dart';
 import 'package:lwflutterapp/lwhooray/moudel/loginMoudel/LwLogin.dart';
 import 'package:lwflutterapp/lwhooray/moudel/loginMoudel/model/loginModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';

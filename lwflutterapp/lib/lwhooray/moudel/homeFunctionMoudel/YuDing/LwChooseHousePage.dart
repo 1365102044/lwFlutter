@@ -14,7 +14,8 @@ class LwYuDingChooseHousePage extends StatefulWidget {
       _LwYuDingChooseHousePageState();
 }
 
-class _LwYuDingChooseHousePageState extends State<LwYuDingChooseHousePage> with AutomaticKeepAliveClientMixin{
+class _LwYuDingChooseHousePageState extends State<LwYuDingChooseHousePage>
+    with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
   Function _callBackBlock;
   List<String> _leftTextList = ['房源项目', '选择房型', '选择房号'];
@@ -135,10 +136,21 @@ class _LwYuDingChooseHousePageState extends State<LwYuDingChooseHousePage> with 
     _roomInforModel.result.roomTypePeizhi.forEach((m) {
       String v = m.values.first;
       if (v != null) {
-        datas.add({'assets/house/sheshi/'+v+'.png': v});
+        datas.add({'assets/house/sheshi/' + v + '.png': v});
       }
     });
     return datas;
+  }
+
+  _getNumber() {
+    if (lwUtils.lw_isEmpty(_paramMap['itemId']) ||
+        lwUtils.lw_isEmpty(_paramMap['roomTypeId']) ||
+        lwUtils.lw_isEmpty(_paramMap['houseId']) ||
+        (_roomInforModel == null)) {
+      return 1;
+    } else {
+      return 2;
+    }
   }
 
   @override
@@ -152,7 +164,7 @@ class _LwYuDingChooseHousePageState extends State<LwYuDingChooseHousePage> with 
             Expanded(
               child: Container(
                 child: ListView.builder(
-                  itemCount: (_roomInforModel == null) ? 1 : 2,
+                  itemCount: _getNumber(),
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
                       return getTopCardWidget();
@@ -170,8 +182,13 @@ class _LwYuDingChooseHousePageState extends State<LwYuDingChooseHousePage> with 
               ),
             ),
             Container(
-              child: getBottomBtnWidget(context, ['下一步'],callBackBlock: (text){
-                _callBackBlock(1,_paramMap,_roomInforModel);
+              child:
+                  getBottomBtnWidget(context, ['下一步'], callBackBlock: (text) {
+                if(_getNumber() != 2){
+                  lwUtils.showAlertDialog(context, '提示', '请选择房源信息');
+                  return;
+                }
+                _callBackBlock(1, _paramMap, _roomInforModel);
               }),
             )
           ],

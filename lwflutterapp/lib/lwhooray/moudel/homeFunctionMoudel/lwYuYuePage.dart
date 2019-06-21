@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:core' ;
+import 'dart:core';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,7 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
   };
   String _accountphone = '';
   String _phonePlaceHodler = '请输入手机号';
+
   ///loginCellPhone
   String _mendianText = '请选择门店';
   String _huxingText = '请选择户型';
@@ -49,7 +50,7 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
     getPhone();
 
     /// 获取项目数据
-    _viewModel.getProjectInfor(callBackBlcok:(projects) {
+    _viewModel.getProjectInfor(callBackBlcok: (projects) {
       setState(() {
         _projectList.addAll(projects);
       });
@@ -63,7 +64,7 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
     setState(() {
       _textEditingController_phone.text = phone;
       _paramMap['phone'] = phone;
-      if(phone.isEmpty){
+      if (phone.isEmpty) {
         _phonePlaceHodler = '请输入手机号';
       }
       print('------------_accountphone:$_accountphone');
@@ -78,7 +79,8 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
     });
     lwShowAlertList(context, '选择门店', datasProjectName,
         callBlackBlock: (int index) {
-      _viewModel.getHuXingInforByProjectId(_projectList[index].id, callBackBlcok:(huxings) {
+      _viewModel.getHuXingInforByProjectId(_projectList[index].id,
+          callBackBlcok: (huxings) {
         setState(() {
           _huxingList.addAll(huxings);
         });
@@ -108,9 +110,9 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
     });
     lwShowAlertList(context, '选择户型', datasHuXingName,
         callBlackBlock: (int index) {
-          print('**lw***********_huxingList[index].roomTypeId*************');
-          print(_huxingList[index].roomTypeId);
-          print('*************_huxingList[index].roomTypeId***********lw**');
+      print('**lw***********_huxingList[index].roomTypeId*************');
+      print(_huxingList[index].roomTypeId);
+      print('*************_huxingList[index].roomTypeId***********lw**');
       _paramMap['roomTypeId'] = _huxingList[index].roomTypeId;
       _paramMap['itemId'] = _huxingList[index].roomTypeId;
       setState(() {
@@ -174,70 +176,79 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: lwAppBar('预约'),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 220,
-                child: Image.asset(
-                  'assets/home/yuyue.png',
-                  fit: BoxFit.cover,
+      body: WillPopScope(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 220,
+                  child: Image.asset(
+                    'assets/home/yuyue.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              Container(
-                height: 40,
-                child: Text('请填写个人真实信息，以便管家与你取得联系'),
-                alignment: Alignment.center,
-              ),
-              Container(
-                child: cellTFWidget('姓名',
-                    rightPlaceHodler: '请输入姓名',
-                    paraMap: _paramMap,
-                    textfiledKey: 'name',
-                    controller: _textEditingController_name),
-              ),
-              Container(
-                child: cellTFWidget('手机号',
+                Container(
+                  height: 40,
+                  child: Text('请填写个人真实信息，以便管家与你取得联系'),
+                  alignment: Alignment.center,
+                ),
+                Container(
+                  child: cellTFWidget('姓名',
+                      rightPlaceHodler: '请输入姓名',
+                      paraMap: _paramMap,
+                      textfiledKey: 'name',
+                      controller: _textEditingController_name),
+                ),
+                Container(
+                  child: cellTFWidget(
+                    '手机号',
                     rightText: '',
                     paraMap: _paramMap,
                     rightPlaceHodler: _phonePlaceHodler,
                     textfiledKey: 'phone',
-                    controller: _textEditingController_phone,),
-              ),
-              Container(
-                height: 10,
-                color: LWCOLOR.LWCOLOR_BACKGROUND,
-              ),
-              Container(
-                  child: cellArrowWidget('选择门店',
-                      rightText: _mendianText,
-                      isHaveRightIcon: true,
-                      callBackBlock: chooseProject)),
-              Container(
-                  child: cellArrowWidget('意向户型',
-                      rightText: _huxingText,
-                      isHaveRightIcon: true,
-                      callBackBlock: choosehuXing)),
-              Container(
-                  child: cellArrowWidget('期望入住时间',
-                      rightText: _wantTimeText,
-                      isHaveRightIcon: true,
-                      callBackBlock: chooseDate)),
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 30, 20, 20),
-                height: 40,
-                child: lwFillButton(
-                  '提交预约',
-                  commitInfor,
-                  radius: 6,
+                    controller: _textEditingController_phone,
+                  ),
                 ),
-              )
-            ],
+                Container(
+                  height: 10,
+                  color: LWCOLOR.LWCOLOR_BACKGROUND,
+                ),
+                Container(
+                    child: cellArrowWidget('选择门店',
+                        rightText: _mendianText,
+                        isHaveRightIcon: true,
+                        callBackBlock: chooseProject)),
+                Container(
+                    child: cellArrowWidget('意向户型',
+                        rightText: _huxingText,
+                        isHaveRightIcon: true,
+                        callBackBlock: choosehuXing)),
+                Container(
+                    child: cellArrowWidget('期望入住时间',
+                        rightText: _wantTimeText,
+                        isHaveRightIcon: true,
+                        callBackBlock: chooseDate)),
+                Container(
+                  margin: EdgeInsets.fromLTRB(20, 30, 20, 20),
+                  height: 40,
+                  child: lwFillButton(
+                    '提交预约',
+                    commitInfor,
+                    radius: 6,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
+        onWillPop: () {
+          lwUtils.showAlertDialog(context, '提示', '确定退出预约 ？', btnText: '确定',
+              callblack: () {
+            Navigator.pop(context);
+          });
+        },
       ),
     );
   }
 }
-

@@ -38,7 +38,7 @@ class _LwFindPageState extends State<LwFindPage> {
           child: WebView(
             onWebViewCreated: (WebViewController vc){
               _webviewVC = vc;
-              _webviewVC.loadUrl(url1);
+              _webviewVC.loadUrl(_url);
             },
             onPageFinished: (ur){
               setState(() {

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
-import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/model/LwHomeModel.dart';
-import 'package:lwflutterapp/lwhooray/moudel/loginMoudel/widgets/LwLoginWidget.dart';
 import 'package:lwflutterapp/lwhooray/other/api.dart';
 import 'package:lwflutterapp/lwhooray/tool/networkUtils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/loginModel.dart';
 

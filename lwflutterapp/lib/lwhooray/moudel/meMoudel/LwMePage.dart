@@ -8,13 +8,15 @@ class LwMePage extends StatefulWidget {
   _LwMePageState createState() => _LwMePageState();
 }
 
-class _LwMePageState extends State<LwMePage> with AutomaticKeepAliveClientMixin{
+class _LwMePageState extends State<LwMePage>
+    with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
   @override
-
   void initState() {
     super.initState();
     _checkLoginStatus();
+    print('**lw**********initState.mepage**************');
+    print('***************initState.mepage*********lw**');
   }
 
   _checkLoginStatus() async {

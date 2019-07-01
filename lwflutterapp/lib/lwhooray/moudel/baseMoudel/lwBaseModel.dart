@@ -127,7 +127,7 @@ Widget lwAppBar(
 }
 
 Widget lwTabBarWidget(
-    BuildContext context, TabController tabbarcontrolelr, Map datas) {
+    BuildContext context, TabController tabbarcontrolelr, Map datas,{Function onTap}) {
   return Container(
     height: 56,
     child: TabBar(
@@ -144,6 +144,7 @@ Widget lwTabBarWidget(
       unselectedLabelStyle: new TextStyle(fontSize: 12), // 未选中的标签的样式
       // labelPadding: EdgeInsets.all(0),
       tabs: getTabsWidget(context, datas),
+      onTap: onTap,
     ),
   );
 }

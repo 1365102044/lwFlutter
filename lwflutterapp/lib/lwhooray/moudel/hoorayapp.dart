@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
+import 'baseMoudel/lwLocalDataUtils.dart';
 import 'findMoudel/LwFindPage.dart';
 import 'homeMoudel/LwHomePage.dart';
 import 'houseMoudel/LwHousePage.dart';
@@ -21,15 +22,19 @@ class HoorayAppSatate extends State<Hoorayapp>
   initState() {
     super.initState();
     controller = new TabController(length: 4, vsync: this);
-    platform.setMethodCallHandler((MethodCall call){
-      if(call.method == 'routes'){
-        if(call.arguments.toString() == 'house'){
+    platform.setMethodCallHandler((MethodCall call) {
+      if (call.method == 'routes') {
+        if (call.arguments.toString() == 'house') {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => LwHousePage(null),
           ));
         }
       }
     });
+  }
+
+  _checkLoginStatus() async {
+    await lwLocalDataUtils().isLoginStatue(context);
   }
 
   @override
@@ -46,14 +51,14 @@ class HoorayAppSatate extends State<Hoorayapp>
 
     // controller.index = 0;
 
-    controller.addListener(() {
-      if (controller.indexIsChanging) {
-        print('------------${controller.index.toString()}');
-        if (controller.index == 3) {
-        }
-        print('=====${controller.index}');
-      }
-    });
+    // controller.addListener(() {
+    //   if (controller.indexIsChanging) {
+    //     if (controller.index == 3) {
+    //       _checkLoginStatus();
+    //     }
+    //     print('=====点击的第${controller.index}个tabbar');
+    //   }
+    // });
   }
 
   @override
@@ -72,16 +77,25 @@ class HoorayAppSatate extends State<Hoorayapp>
         ),
         bottomNavigationBar: new Material(
           color: Colors.white,
-          child: lwTabBarWidget(context, controller, {
-            '首页': 'home_tab_n',
-            '房源': 'house_tab_n',
-            '发现': 'find_tab_n',
-            '我的': 'me_tab_n'
-          }),
+          child: lwTabBarWidget(
+              context,
+              controller,
+              {
+                '首页': 'home_tab_n',
+                '房源': 'house_tab_n',
+                '发现': 'find_tab_n',
+                '我的': 'me_tab_n'
+              },
+              onTap: (index) {
+                if (index == 3) {
+                  // _checkLoginStatus();
+                }
+                // print('+++++++++++++=index:${index.toString()}');
+              }),
         ),
       ),
       // routes: <String, WidgetBuilder>{
-        
+
       // },
     );
   }

@@ -117,8 +117,8 @@ Widget lwTextLeftIconRightRowItemWidget(
           ),
         ),
         Container(
-          width: 20.0,
-          height: 20.0,
+          width: 10.0,
+          height: 15.0,
           child: Image.asset(iconName),
         )
       ],

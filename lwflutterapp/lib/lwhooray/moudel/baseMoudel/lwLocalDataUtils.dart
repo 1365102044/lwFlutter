@@ -66,6 +66,8 @@ class lwLocalDataUtils {
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       String account_token = sharedPreferences.getString(ACCOUNT_INFOR_TOKE_LOCAL_DATA_KEY);
       print('+++++++++account_token:$account_token');
+      print('+++++++++++++++++');
+      print(context.widget);
       if (account_token != null && account_token != '') {
         print('========已登录登录：$context');
         // return true;

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwBaseModel.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwLocalDataUtils.dart';
 import 'package:lwflutterapp/lwhooray/moudel/baseMoudel/lwUtils.dart';
+import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/YuDing/LwYuDingPage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeFunctionMoudel/lwYuYuePage.dart';
 import 'package:lwflutterapp/lwhooray/moudel/homeMoudel/widgets/LwHomeSwiperWidget.dart';
 import 'package:lwflutterapp/lwhooray/moudel/houseMoudel/model/LwHuXingDeatilModel.dart';
@@ -175,7 +176,11 @@ class _lwHuXingDeatilPageState extends State<lwHuXingDeatilPage> {
                           margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: lwFillButton(
                             '预定',
-                            () {},
+                            () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LwYuDingPage(),));
+                              
+                            },
                             radius: 6,
                           ),
                         ),

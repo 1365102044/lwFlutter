@@ -198,7 +198,8 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
                       rightPlaceHodler: '请输入姓名',
                       paraMap: _paramMap,
                       textfiledKey: 'name',
-                      controller: _textEditingController_name),
+                      controller: _textEditingController_name,
+                      maxlenght: 10,),
                 ),
                 Container(
                   child: cellTFWidget(
@@ -208,6 +209,8 @@ class _lwYuYuePageState extends State<lwYuYuePage> {
                     rightPlaceHodler: _phonePlaceHodler,
                     textfiledKey: 'phone',
                     controller: _textEditingController_phone,
+                    maxlenght: 11,
+                    inputType: TextInputType.number,
                   ),
                 ),
                 Container(

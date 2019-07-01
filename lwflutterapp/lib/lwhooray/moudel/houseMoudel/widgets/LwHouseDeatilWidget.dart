@@ -103,7 +103,7 @@ Widget basicsInforWidget(
 /// 九宫格，图片路径：文字
 Widget JiuGongGeForIconTextWidget(
     BuildContext context, List<Map<String, String>> datas) {
-  return Container(
+  return datas.length > 0? Container(
     child: GridView(
       physics: NeverScrollableScrollPhysics(), //禁止滚动
       shrinkWrap: true, // 解决嵌套问题的冲突
@@ -122,6 +122,8 @@ Widget JiuGongGeForIconTextWidget(
         );
       }),
     ),
+  ): Container(
+    height: 5,
   );
 }
 
